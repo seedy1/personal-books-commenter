@@ -1,0 +1,16 @@
+# generated JS files
+dist/**/*
+dist
+node_modules
+
+
+# Dependency directories
+node_modules
+
+.env
+.env.test
+
+# lock files
+package-lock.json
+
+
