@@ -1,15 +1,23 @@
 import { Schema, model, connect } from 'mongoose';
 
 interface Book{ // refactor to get from generated schema
-
-    name: string;
+    title: string;
+    author: string;
+    year: string;
+    genre: string;
+    pages: number;
+    isbn: string;
 }
 
 const bookSchema = new Schema<Book>({
-    name: {type: String, required: true}
+    title: {type: String, required: true},
+    author: {type: String, required: true},
+    year: {type: String, required: true},
+    genre: {type: String, required: true},
+    pages: {type: Number, required: true},
+    isbn: {type: String, required: true}
 });
 
 const BookModel = model<Book>('Book', bookSchema);
-module.exports = model<Book>('Book', bookSchema);
-
-// const UserModel = model<Book>('User', schema);
+// module.exports = BookModel;
+export default BookModel;

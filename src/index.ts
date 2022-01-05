@@ -1,8 +1,9 @@
 import Fastify from "fastify";
+import {SERVER_PORT} from "./lib/dotenv";
 
 
 const fastify = Fastify({logger: true});
-const PORT = 3000;
+
 
 // Declare a route
 // fastify.get()
@@ -12,7 +13,7 @@ fastify.get('/', async (request, reply) => {
 
 const start = async () =>{
     try{
-        await fastify.listen(PORT);
+        await fastify.listen(SERVER_PORT);
     }catch(err){
 
         fastify.log.error(err);
