@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "type": "object",
+    "required": ["title", "author", "realeaseYear", "genre","pages"],
+    "additionalProperties": false,
+    "properties": {
+        "title": { "type": "string" },
+        "author": { "type": "string" },
+        "realeaseYear": { "type": "number" },
+        "genre": { "type": "string" },
+        "pages": { "type": "number" },
+        "isbn": { "type": "string" },
+        "rating": { "type": "string" },        
+      "chapters": {
+          "type": "array",
+          "items": {"$ref": "chapter.json"}
+        },
+      "characters": {
+          "type": "array",
+          "items":{ "$ref": "character.json"}
+        }
+    }
+  }
+  

@@ -1,7 +1,7 @@
 import {connect, Collection} from "mongoose";
-import BookModel from "../models/Book";
+import BookModel from "../models/Book-old";
 
-import {DB_CONNECTION} from "../lib/dotenv";
+// import {DB_CONNECTION} from "../lib/dotenv";
 
 
 before(async function() {
@@ -20,7 +20,7 @@ before(async function() {
 async function dbSetup(): Promise<void> {
     // console.log("ran");
     
-  await connect(DB_CONNECTION);
+  // await connect(DB_CONNECTION);
 
   const _book =  await BookModel.create({
     title: "string",
@@ -29,6 +29,7 @@ async function dbSetup(): Promise<void> {
     genre: "string",
     pages: "number",
     isbn: "string",
+    created_at: "11"
   });
 
 
