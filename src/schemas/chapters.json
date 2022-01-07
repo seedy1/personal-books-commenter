@@ -1,0 +1,11 @@
+{
+    "$id": "chapter.json",
+    "$schema": "http://json-schema.org/schema",
+    "type": "object",
+    "required": ["chapter", "book"],
+    "additionalProperties": false,
+    "properties": {
+      "chapter": { "type": "string" },
+      "book": { "type": "string" }
+    }
+  }

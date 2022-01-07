@@ -1,15 +1,61 @@
-import { Schema, model, connect } from 'mongoose';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Chapters } from "./Chapters";
+import { Characters } from "./Characters";
 
-interface Book{ // refactor to get from generated schema
-
-    name: string;
+enum bookRating{
+    ONE = "one",
+    TWO = "two",
+    THREE = "three",
+    FOUR = "four",
+    FIVE = "five"
 }
 
-const bookSchema = new Schema<Book>({
-    name: {type: String, required: true}
-});
+// use later
+enum Genres{
+    FICTION = "FICTION",
+    NONFICTION = "NON-FICTION",
+    DRAMA = "DRAMA",
+    THRILLER = "THRILLER",
+    SCIFI = "SCI-FI",
+    OTHERS = "OTHERS"
+}
 
-const BookModel = model<Book>('Book', bookSchema);
-module.exports = model<Book>('Book', bookSchema);
+// add unique for title
+@Entity()
+export class Book{
 
-// const UserModel = model<Book>('User', schema);
+    @PrimaryGeneratedColumn()
+    id!: number;
+
+    @Column({type: "varchar", unique: true})
+    title!: string;
+
+    @Column({type: "varchar"})
+    author!: string;
+
+    @Column({type: "varchar", nullable: true})
+    realeaseYear!: string;
+
+    // create gerne table or enum?
+    @Column({type: "varchar"})
+    genre!: string;
+
+    @Column({type: "int"})
+    pages!: number;
+
+    @Column({type: "varchar", nullable: true})
+    isbn?: string;
+
+    @Column({type: "enum", enum: bookRating, nullable: true})
+    rating?: bookRating;
+
+    @CreateDateColumn()
+    createdAt!: string;
+
+    @OneToMany( ()=> Characters, characters => characters.book )
+    characters?: Characters[];
+
+    @OneToMany( ()=> Chapters, chapter => chapter.book )
+    chapters?: Chapters[];
+
+}
