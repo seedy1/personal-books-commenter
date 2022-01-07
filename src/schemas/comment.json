@@ -1,11 +1,13 @@
 {
-    "$id": "character.json",
+    "$id": "comment.json",
     "$schema": "http://json-schema.org/schema",
     "type": "object",
     "required": ["name", "bookId"],
     "additionalProperties": false,
     "properties": {
-      "characterName": { "type": "string" },
-      "bookId": { "type": "number" }
+      "comment": { "type": "string"},
+      "characterId": { "type": "number" },
+      "chapterId": { "type": "number"}
+
     }
   }

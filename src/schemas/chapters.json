@@ -2,10 +2,10 @@
     "$id": "chapter.json",
     "$schema": "http://json-schema.org/schema",
     "type": "object",
-    "required": ["name", "address"],
+    "required": ["chapter", "book"],
     "additionalProperties": false,
     "properties": {
-      "name": { "type": "string" },
-      "address": { "$ref": "address.json" }
+      "chapter": { "type": "string" },
+      "book": { "type": "string" }
     }
   }

@@ -5,7 +5,7 @@ import { bookRoute } from "./routes/book";
 
 import * as dotenv from "dotenv";
 // dotenv.config({ path: __dirname+'/.env' });
-require('dotenv').config() 
+// require('dotenv').config() 
 
 function getOrThrow(name: string) {
     const val = process.env[name]
