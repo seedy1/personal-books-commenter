@@ -10,15 +10,7 @@
         "genre": { "type": "string" },
         "pages": { "type": "number" },
         "isbn": { "type": "string" },
-        "rating": { "type": "string" },        
-      "chapters": {
-          "type": "array",
-          "items": {"$ref": "chapter.json"}
-        },
-      "characters": {
-          "type": "array",
-          "items":{ "$ref": "character.json"}
-        }
+        "rating": { "type": "string" }
     }
   }
   
