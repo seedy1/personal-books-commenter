@@ -18,8 +18,8 @@ const fastify = Fastify({logger: true});
 fastify.register(bookRoutes);
 // Declare a route
 // fastify.get()    "mysql2": "^2.3.3-rc.0",
-fastify.get('/', async (request, reply) => {
-    return { hello: 'world' }
+fastify.get('/:id', async (request, reply) => {
+    return { hello: request.params }
   })
 
 const start = async () =>{

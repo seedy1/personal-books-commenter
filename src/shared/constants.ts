@@ -9,9 +9,9 @@ export enum bookRating{
 // use later
 export enum Genres{
     FICTION = "FICTION",
-    NONFICTION = "NON-FICTION",
+    NON_FICTION = "NON_FICTION",
     DRAMA = "DRAMA",
     THRILLER = "THRILLER",
-    SCIFI = "SCI-FI",
+    SCI_FI = "SCI_FI",
     OTHERS = "OTHERS"
 }

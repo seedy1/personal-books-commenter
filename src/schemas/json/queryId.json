@@ -1,0 +1,11 @@
+
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "$id": "https://example.com/product.schema.json",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id"],
+    "properties": {
+        "id": {"type": "integer"}
+    }
+}

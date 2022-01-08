@@ -9,8 +9,8 @@ export interface BookBody {
   title: string;
   author: string;
   realeaseYear: number;
-  genre: string;
+  genre: "FICTION" | "NON_FICTION" | "DRAMA" | "THRILLER" | "SCI_FI" | "OTHERS";
   pages: number;
   isbn?: string;
-  rating?: string;
+  rating?: "ONE" | "TWO" | "THREE" | "FOUR" | "FIVE";
 }

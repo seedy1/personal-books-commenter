@@ -10,7 +10,7 @@
         "realeaseYear": { "type": "number" },
         "genre": {
             "type": "string",
-            "enum": ["FICTION", "NON-FICTION", "DRAMA", "THRILLER", "SCI-FI", "OTHERS" ]
+            "enum": ["FICTION", "NON_FICTION", "DRAMA", "THRILLER", "SCI_FI", "OTHERS" ]
         },
         "pages": { "type": "number" },
         "isbn": { "type": "string" },

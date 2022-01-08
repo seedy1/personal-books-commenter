@@ -13,10 +13,10 @@ enum bookRating{
 // use later
 enum Genres{
     FICTION = "FICTION",
-    NONFICTION = "NON-FICTION",
+    NON_FICTION = "NON_FICTION",
     DRAMA = "DRAMA",
     THRILLER = "THRILLER",
-    SCIFI = "SCI-FI",
+    SCI_FI = "SCI_FI",
     OTHERS = "OTHERS"
 }
 
@@ -33,12 +33,12 @@ export class Book{
     @Column({type: "varchar"})
     author!: string;
 
-    @Column({type: "varchar", nullable: true})
-    realeaseYear!: string;
+    @Column({type: "int", nullable: true})
+    realeaseYear!: number;
 
     // create gerne table or enum?
-    @Column({type: "varchar", enum: Genres})
-    genre!: string;
+    @Column({type: "enum", enum: Genres})
+    genre!: Genres;
 
     @Column({type: "int"})
     pages!: number;
@@ -57,5 +57,9 @@ export class Book{
 
     @OneToMany( ()=> Chapters, chapter => chapter.book )
     chapters?: Chapters[];
+
+    // get IDA(): number {
+    //     return this.id;
+    //   }
 
 }
