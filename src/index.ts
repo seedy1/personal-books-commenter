@@ -1,7 +1,7 @@
 import Fastify from "fastify";
 import { initConnection } from "./lib/databaseConfig";
 import {SERVER_PORT} from "./lib/dotenv";
-import { bookRoute } from "./routes/book";
+import { bookRoutes } from "./routes/book";
 
 import * as dotenv from "dotenv";
 // dotenv.config({ path: __dirname+'/.env' });
@@ -15,7 +15,7 @@ function getOrThrow(name: string) {
 
 const fastify = Fastify({logger: true});
 
-fastify.register(bookRoute);
+fastify.register(bookRoutes);
 // Declare a route
 // fastify.get()    "mysql2": "^2.3.3-rc.0",
 fastify.get('/', async (request, reply) => {

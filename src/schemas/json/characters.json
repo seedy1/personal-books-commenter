@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/schema",
+    "$id": "https://example.com/product.schema.json",
     "type": "object",
     "required": ["name", "bookId"],
     "additionalProperties": false,

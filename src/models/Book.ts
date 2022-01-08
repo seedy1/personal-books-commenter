@@ -3,11 +3,11 @@ import { Chapters } from "./Chapters";
 import { Characters } from "./Characters";
 
 enum bookRating{
-    ONE = "one",
-    TWO = "two",
-    THREE = "three",
-    FOUR = "four",
-    FIVE = "five"
+    ONE = "ONE",
+    TWO = "TWO",
+    THREE = "THREE",
+    FOUR = "FOUR",
+    FIVE = "FIVE"
 }
 
 // use later
@@ -37,7 +37,7 @@ export class Book{
     realeaseYear!: string;
 
     // create gerne table or enum?
-    @Column({type: "varchar"})
+    @Column({type: "varchar", enum: Genres})
     genre!: string;
 
     @Column({type: "int"})

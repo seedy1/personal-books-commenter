@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/schema",
+    "$id": "https://example.com/product.schema.json",
     "type": "object",
     "required": ["title", "author", "realeaseYear", "genre","pages"],
     "additionalProperties": false,
@@ -7,10 +8,16 @@
         "title": { "type": "string" },
         "author": { "type": "string" },
         "realeaseYear": { "type": "number" },
-        "genre": { "type": "string" },
+        "genre": {
+            "type": "string",
+            "enum": ["FICTION", "NON-FICTION", "DRAMA", "THRILLER", "SCI-FI", "OTHERS" ]
+        },
         "pages": { "type": "number" },
         "isbn": { "type": "string" },
-        "rating": { "type": "string" }
+        "rating": {
+            "type": "string",
+            "enum": ["ONE", "TWO", "THREE", "FOUR", "FIVE"]
+        }
     }
   }
   
