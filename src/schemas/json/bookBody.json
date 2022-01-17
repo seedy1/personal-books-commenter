@@ -1,16 +1,26 @@
 {
     "$schema": "http://json-schema.org/schema",
+    "$id": "bookings",
+    "type": "array",
+    "items": {
     "type": "object",
     "required": ["title", "author", "realeaseYear", "genre","pages"],
     "additionalProperties": false,
     "properties": {
+        "$id" : {"type": "number"},
         "title": { "type": "string" },
         "author": { "type": "string" },
         "realeaseYear": { "type": "number" },
-        "genre": { "type": "string" },
+        "genre": {
+            "type": "string",
+            "enum": ["FICTION", "NON_FICTION", "DRAMA", "THRILLER", "SCI_FI", "OTHERS" ]
+        },
         "pages": { "type": "number" },
         "isbn": { "type": "string" },
-        "rating": { "type": "string" }
+        "rating": {
+            "type": "string",
+            "enum": ["ONE", "TWO", "THREE", "FOUR", "FIVE"]
+        }
     }
   }
-  
+}

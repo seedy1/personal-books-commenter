@@ -1,0 +1,11 @@
+
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "paraming",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id"],
+    "properties": {
+        "id": {"type": "integer"}
+    }
+}

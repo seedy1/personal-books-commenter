@@ -5,12 +5,6 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface Book {
-  title: string;
-  author: string;
-  realeaseYear: number;
-  genre: string;
-  pages: number;
-  isbn?: string;
-  rating?: string;
+export interface QueryId {
+  id: number;
 }
