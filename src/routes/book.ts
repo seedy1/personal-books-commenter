@@ -16,16 +16,17 @@ export async function bookRoutes(fastify: FastifyInstance){
         method: 'GET',
         url: '/books',
         schema: {
-            // response: {200: bookSchema}
+            response: {200: bookSchema}
         },
         handler: async function (request, reply) {
             const booksRepo = await getRepository(Book);
-            const books = await booksRepo.find();
+            const books = await booksRepo.find({order: {id: "DESC"}});
             // reply.send(books);
             console.log("books");
             console.log(books);
             
-            return reply.send({books});
+            return reply.send(books);
+            // return books;
 
         }
     });
@@ -37,8 +38,8 @@ export async function bookRoutes(fastify: FastifyInstance){
         method: 'GET',
         url: '/books/:id',
         schema: {
-            // params: queryIdSchema,
-            // response: {200: bookSchema}
+            params: queryIdSchema,
+            response: {200: bookSchema}
         },
         handler: async function (request, reply) {
 
@@ -46,6 +47,8 @@ export async function bookRoutes(fastify: FastifyInstance){
 
             const booksRepo = await getRepository(Book);
             const book = await booksRepo.findOneOrFail(id);
+            console.log(book);
+            
             // const book = await booksRepo.findOne(id);
             // later check if(!book)
             return reply.send(book);  

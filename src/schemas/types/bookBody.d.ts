@@ -6,6 +6,7 @@
  */
 
 export interface BookBody {
+  $id?: number;
   title: string;
   author: string;
   realeaseYear: number;

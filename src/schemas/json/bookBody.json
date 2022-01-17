@@ -1,10 +1,13 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "$id": "https://example.com/product.schema.json",
+    "$id": "bookings",
+    "type": "array",
+    "items": {
     "type": "object",
     "required": ["title", "author", "realeaseYear", "genre","pages"],
     "additionalProperties": false,
     "properties": {
+        "$id" : {"type": "number"},
         "title": { "type": "string" },
         "author": { "type": "string" },
         "realeaseYear": { "type": "number" },
@@ -20,4 +23,4 @@
         }
     }
   }
-  
+}

@@ -1,7 +1,7 @@
 
 {
-    "$schema": "http://json-schema.org/draft-04/schema",
-    "$id": "https://example.com/product.schema.json",
+    "$schema": "http://json-schema.org/schema",
+    "$id": "paraming",
     "type": "object",
     "additionalProperties": false,
     "required": ["id"],
