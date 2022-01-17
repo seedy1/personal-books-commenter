@@ -1,5 +1,6 @@
 import Fastify from "fastify";
-import { initConnection } from "./lib/databaseConfig";
+import { createConnection, getConnection } from "typeorm";
+import { connections, initConnection } from "./lib/databaseConfig";
 import {SERVER_PORT} from "./lib/dotenv";
 import { bookRoutes } from "./routes/book";
 // import * as bookSchema  from "./schemas/json/bookBody.json";
@@ -25,7 +26,10 @@ fastify.get('/:id', async (request, reply) => {
 const start = async () =>{
     
     await initConnection();
+    // await connections("devDB");
     
+    // await createConnection("devDB");
+    // const dbDev = await getConnection("devDB");
     try{
         await fastify.listen(SERVER_PORT);
     }catch(err){

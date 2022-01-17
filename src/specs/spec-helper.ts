@@ -1,14 +1,15 @@
-import {connect, Collection} from "mongoose";
+import { TestInitConnection } from "../lib/databaseConfig";
 import BookModel from "../models/Book-old";
-
-// import {DB_CONNECTION} from "../lib/dotenv";
 
 
 before(async function() {
   await console.log("setting up db");
-  await dbSetup();
+  // await dbSetup();
+  await TestInitConnection();
   await console.log("db setup done");
 });
+
+
 
 // beforeEach(function() {
 //   // runs before each test in this block
