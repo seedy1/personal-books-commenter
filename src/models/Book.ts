@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Chapters } from "./Chapters";
-import { Characters } from "./Characters";
+import { Personas } from "./Personas";
 
 enum bookRating{
     ONE = "ONE",
@@ -52,8 +52,8 @@ export class Book{
     @CreateDateColumn()
     createdAt!: string;
 
-    @OneToMany( ()=> Characters, characters => characters.book )
-    characters?: Characters[];
+    @OneToMany( ()=> Personas, personas => personas.book )
+    characters?: Personas[];
 
     @OneToMany( ()=> Chapters, chapter => chapter.book )
     chapters?: Chapters[];

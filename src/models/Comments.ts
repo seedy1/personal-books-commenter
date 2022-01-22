@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Chapters } from "./Chapters";
-import { Characters } from "./Characters";
+import { Personas } from "./Personas";
 
 @Entity()
 export class Comments{
@@ -18,7 +18,7 @@ export class Comments{
     @ManyToMany( ()=> Chapters, chapters => chapters.comments)
     chapter?: Chapters;
 
-    @ManyToMany( ()=> Characters, characters => characters.comments )
-    character?: Characters;
+    @ManyToMany( ()=> Personas, personas => personas.comments )
+    character?: Personas;
 
 }

@@ -16,7 +16,7 @@ export async function bookRoutes(fastify: FastifyInstance){
         method: 'GET',
         url: '/books',
         schema: {
-            response: {200: bookSchema}
+            // response: {200: bookSchema}
         },
         handler: async function (request, reply) {
             const booksRepo = await getRepository(Book);
@@ -39,7 +39,7 @@ export async function bookRoutes(fastify: FastifyInstance){
         url: '/books/:id',
         schema: {
             params: queryIdSchema,
-            response: {200: bookSchema}
+            // response: {200: bookSchema}
         },
         handler: async function (request, reply) {
 
@@ -62,7 +62,7 @@ export async function bookRoutes(fastify: FastifyInstance){
         url: '/books',
         schema: {
             body: bookSchema,
-            response: {200: bookSchema}
+            // response: {200: bookSchema}
         },
         handler: async function (request, reply): Promise<BookBody>{
 
@@ -97,7 +97,7 @@ export async function bookRoutes(fastify: FastifyInstance){
         // method: 'PUT',
         url: '/books/:id',
         schema: {
-            // params: queryIdSchema,
+            params: queryIdSchema,
             // response: {200: bookSchema}
         },
         handler: async function (request, reply){
@@ -128,7 +128,7 @@ export async function bookRoutes(fastify: FastifyInstance){
         method: 'DELETE',
         url: '/books/:id',
         schema: {
-            // params: queryIdSchema,
+            params: queryIdSchema,
             // response: {200: bookSchema}
         },
         handler: async function (request, reply) {
