@@ -18,6 +18,7 @@ export const SERVER_PORT = parseInt(process.env.PORT || '3000', 10);
 // export const DATABASE_HOST = String(process.env.DATABASE_HOST);
 
 export const DATABASE_NAME = getOrThrow("DATABASE_NAME");
+export const TEST_DATABASE_NAME = getOrThrow("TEST_DATABASE_NAME");
 export const DATABASE_USER = getOrThrow("DATABASE_USER");
 export const DATABASE_PASSWORD = getOrThrow("DATABASE_PASSWORD");
 export const DATABASE_PORT = parseInt(getOrThrow(("DATABASE_PORT") || '3307'), 10);
