@@ -7,4 +7,5 @@ npx tsc --watch and node .\dist\scrap.js
 - [x] book crud test - unit test
 - [ ] user auth - jwt or passport
 - [ ] user auth test
+- [ ] link user with books
 - [ ] refactor
