@@ -19,6 +19,8 @@ export async function authRoutes(fastify: FastifyInstance) {
         },
         handler: async function( request, reply): Promise<User>{
 
+            // use findBy to confrim email doesnt exsit  
+
             // const newUser= getRepository(Users).create({
             const user = await getRepository(Users).create({
                 fullName: request.body.fullName,

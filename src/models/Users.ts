@@ -1,4 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {hashSync, hash} from "bcryptjs";
+import { HASH_SALT } from "../lib/dotenv";
 
 @Entity()
 export class Users{
@@ -23,6 +25,18 @@ export class Users{
 
 
     // set encrypt password before save
+    @BeforeInsert()
+    @BeforeUpdate()
+    hashPassword(){
+        console.log(this.password);
+        
+        hash(this.password, HASH_SALT, function(err, hash){
+            console.log("GETTING HASH");
+            console.log(hash);
+            
+        });
+
+    }
 
     // verify/decrypt password before login
 };
