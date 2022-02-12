@@ -1,6 +1,6 @@
 import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
-import {hashSync, hash} from "bcryptjs";
-import { HASH_SALT } from "../lib/dotenv";
+import {hashSync, hash, genSalt} from "bcryptjs";
+// import { HASH_SALT } from "../lib/dotenv";
 
 @Entity()
 export class Users{
@@ -27,14 +27,23 @@ export class Users{
     // set encrypt password before save
     @BeforeInsert()
     @BeforeUpdate()
-    hashPassword(){
-        console.log(this.password);
+    private async hashPassword(){
+        await console.log(this.password);
         
-        hash(this.password, HASH_SALT, function(err, hash){
-            console.log("GETTING HASH");
-            console.log(hash);
-            
-        });
+        // this.password = null;
+        
+        // this.password = hash(this.password, HASH_SALT); 
+        // await hash(this.password, HASH_SALT, function(err, hash){
+        //     console.log("GETTING HASH");
+        //     console.log(hash);
+        //     console.log("GETTING HASH ERROR");
+        //     console.log(this.password);
+        // });
+
+        // const salt = await bcrypt.genSalt(10);
+        const hash_salt = await genSalt(10);
+        const hashedPassword = await hash(this.password, hash_salt);
+        this.password = hashedPassword;
 
     }
 

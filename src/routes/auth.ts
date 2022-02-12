@@ -1,5 +1,4 @@
 import { FastifyInstance } from "fastify";
-import { userInfo } from "os";
 import { getRepository } from "typeorm";
 import { Users } from "../models/Users";
 import { User } from "../schemas/types/user";
