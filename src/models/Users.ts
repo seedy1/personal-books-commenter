@@ -1,5 +1,5 @@
 import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
-import {hashSync, hash, genSalt} from "bcryptjs";
+import {hashSync, hash, genSalt, compare} from "bcryptjs";
 // import { HASH_SALT } from "../lib/dotenv";
 
 @Entity()
@@ -11,9 +11,11 @@ export class Users{
     @Column({type: "varchar"})
     fullName!: string;
 
+    // TODO: add email validator here
     @Column({type: "varchar", unique: true})
     email!: string;
 
+    // TODO: add password length validator here
     @Column({type: "varchar"})
     password!: string;
 
@@ -28,19 +30,8 @@ export class Users{
     @BeforeInsert()
     @BeforeUpdate()
     private async hashPassword(){
-        await console.log(this.password);
-        
-        // this.password = null;
-        
-        // this.password = hash(this.password, HASH_SALT); 
-        // await hash(this.password, HASH_SALT, function(err, hash){
-        //     console.log("GETTING HASH");
-        //     console.log(hash);
-        //     console.log("GETTING HASH ERROR");
-        //     console.log(this.password);
-        // });
+        // await console.log(this.password);
 
-        // const salt = await bcrypt.genSalt(10);
         const hash_salt = await genSalt(10);
         const hashedPassword = await hash(this.password, hash_salt);
         this.password = hashedPassword;
@@ -48,4 +39,10 @@ export class Users{
     }
 
     // verify/decrypt password before login
-};
+    public async checkPassword(_password: string){
+
+        const isMatch = await compare(_password, this.password);
+        return isMatch;
+        
+    }
+}
