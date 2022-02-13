@@ -5,7 +5,7 @@ npx tsc --watch and node .\dist\scrap.js
 
 - [x] book crud
 - [x] book crud test - unit test
-- [ ] user auth - fs session and cookie
+- [x] user auth - fs session and cookie
 - [ ] add swagger doc
 - [ ] link user and book resource for cud
 - [ ] link user with books

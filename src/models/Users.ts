@@ -19,8 +19,8 @@ export class Users{
     @Column({type: "varchar"})
     password!: string;
 
-    @Column({ type: 'varchar', unique: true, nullable: true })
-    loginToken?: string;
+    // @Column({ type: 'varchar', unique: true, nullable: true })
+    // loginToken?: string;
 
     @CreateDateColumn()
     createdAt!: string;

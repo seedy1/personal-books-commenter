@@ -50,22 +50,22 @@ export async function authRoutes(fastify: FastifyInstance) {
             
             const userRepo = await getRepository(Users);
             // const _user = await userRepo.findOneOrFail({email});
-            const _user = await userRepo.findOne({email});
+            const user = await userRepo.findOne({email});
 
             // check email
-            if(_user == null){
+            if(user == null){
                 return reply.send("Wrong credentials...");
             }
 
             // check password
             
-            if( !(await _user.checkPassword(password)) ){
+            if( !(await user.checkPassword(password)) ){
                 return reply.send("Wrong credentials...");    
             }
 
             // set session
             // request.session.user = {userID: _user.id};
-            request.session._user = {userId: _user.id}
+            request.session.user = {userId: user.id}
 
             return reply.send("login route - passowrd matched");
 
@@ -78,15 +78,17 @@ export async function authRoutes(fastify: FastifyInstance) {
         url: "/profile",
         handler: async function(request, reply){
             
+            // TODO: handle no session set error
             const {userId} = request.session.user;
 
             console.log("USER ID: "+userId);
             
             const userRepo = await getRepository(Users);
-            const _user = await userRepo.findOne(userId);
+            const user = await userRepo.findOne(userId);
 
 
-            return reply.send(_user?.email);
+            return reply.send({name: user?.fullName, email: user?.email, memberSince: user?.createdAt});
+            // return reply.send(user);
 
         }
     });
