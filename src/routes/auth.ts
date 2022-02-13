@@ -98,7 +98,14 @@ export async function authRoutes(fastify: FastifyInstance) {
         method: "POST",
         url: "/logout",
         handler: async function(request, reply){
-            return reply.send("logged out");
+            // TODO: handle no session set error
+            request.destroySession((err)=>{
+
+                if(err) return reply.send("Logout failed");
+                return reply.send("logged out");
+            });
+
+            // return reply.send("logged out");
         }
     });
 }
