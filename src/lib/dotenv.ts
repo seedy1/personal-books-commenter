@@ -21,6 +21,8 @@ export const DATABASE_HOST = getOrThrow("DATABASE_HOST");
 // password hashing
 export const HASH_SALT = getOrThrow("BYCRYPT_SALT");
 
+// session and cookie
+export const SESSION_SECRET = getOrThrow("SESSION_SECRET");
 
 function getOrThrow(name: string) {
     const val = process.env[name]

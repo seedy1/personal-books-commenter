@@ -63,8 +63,40 @@ export async function authRoutes(fastify: FastifyInstance) {
                 return reply.send("Wrong credentials...");    
             }
 
+            // set session
+            // request.session.user = {userID: _user.id};
+            request.session._user = {userId: _user.id}
+
             return reply.send("login route - passowrd matched");
 
+        }
+    });
+
+    // get current user info akak just email
+    fastify.route({
+        method: "GET",
+        url: "/profile",
+        handler: async function(request, reply){
+            
+            const {userId} = request.session.user;
+
+            console.log("USER ID: "+userId);
+            
+            const userRepo = await getRepository(Users);
+            const _user = await userRepo.findOne(userId);
+
+
+            return reply.send(_user?.email);
+
+        }
+    });
+
+    // logout an clear session
+    fastify.route({
+        method: "POST",
+        url: "/logout",
+        handler: async function(request, reply){
+            return reply.send("logged out");
         }
     });
 }
