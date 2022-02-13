@@ -85,7 +85,7 @@ export async function bookRoutes(fastify: FastifyInstance){
 
             // const book = await getRepository(Book).create(newBook);
             await getRepository(Book).save(book);
-            return book;
+            return reply.send(book);
             
         }
     });

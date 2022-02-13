@@ -1,0 +1,13 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "users",
+    "type": "object",
+    "required": ["email", "password", "fullName"],
+    "additionalProperties": false,
+    "properties": {
+        "fullName": { "type": "string" },
+        "email": { "type": "string" },
+        "password": { "type": "string" },
+        "loginToken": { "type": "string" }
+    }
+}

@@ -11,12 +11,6 @@ export const SERVER_PORT = parseInt(process.env.PORT || '3000', 10);
 
 // databse
 
-// export const DATABASE_NAME = String(process.env.DATABASE_NAME);
-// export const DATABASE_USER = String(process.env.DATABASE_USER);
-// export const DATABASE_PASSWORD = String(process.env.DATABASE_PASSWORD );
-// export const DATABASE_PORT = parseInt(process.env.DATABASE_PORT || '3307', 10);
-// export const DATABASE_HOST = String(process.env.DATABASE_HOST);
-
 export const DATABASE_NAME = getOrThrow("DATABASE_NAME");
 export const TEST_DATABASE_NAME = getOrThrow("TEST_DATABASE_NAME");
 export const DATABASE_USER = getOrThrow("DATABASE_USER");
@@ -24,7 +18,11 @@ export const DATABASE_PASSWORD = getOrThrow("DATABASE_PASSWORD");
 export const DATABASE_PORT = parseInt(getOrThrow(("DATABASE_PORT") || '3307'), 10);
 export const DATABASE_HOST = getOrThrow("DATABASE_HOST");
 
+// password hashing
+export const HASH_SALT = getOrThrow("BYCRYPT_SALT");
 
+// session and cookie
+export const SESSION_SECRET = getOrThrow("SESSION_SECRET");
 
 function getOrThrow(name: string) {
     const val = process.env[name]
