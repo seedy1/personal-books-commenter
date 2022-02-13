@@ -1,12 +1,21 @@
 npx tsc --watch and node .\dist\scrap.js 
 "test": "set NODE_ENV=test && mocha --recursive dist/specs --exit --async-stack-traces",
 
+# NAME
+
+## DESCRIPTION
+
+## HOW TO RUN
+
+## important commands 
+
+`npm i`
 ## TODO
 
 - [x] book crud
 - [x] book crud test - unit test
 - [x] user auth - fs session and cookie
-- [ ] add swagger doc
+- [x] add swagger doc
 - [ ] link user and book resource for cud
 - [ ] link user with books
 - [ ] user auth test

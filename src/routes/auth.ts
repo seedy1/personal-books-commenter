@@ -95,7 +95,7 @@ export async function authRoutes(fastify: FastifyInstance) {
 
     // logout an clear session
     fastify.route({
-        method: "POST",
+        method: "GET",
         url: "/logout",
         handler: async function(request, reply){
             // TODO: handle no session set error
