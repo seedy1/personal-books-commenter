@@ -8,6 +8,10 @@ import { bookRating, Genres } from "../shared/constants";
 import * as queryIdSchema from "../schemas/json/queryId.json";
 import { QueryId } from "../schemas/types/queryId";
 
+import { isUserAuthenticated } from "../lib/isUserAuth";
+import { Users } from "../models/Users";
+
+
 export async function bookRoutes(fastify: FastifyInstance){
     fastify.addSchema(bookSchema);
 
@@ -19,14 +23,11 @@ export async function bookRoutes(fastify: FastifyInstance){
             // response: {200: bookSchema}
         },
         handler: async function (request, reply) {
+
             const booksRepo = await getRepository(Book);
             const books = await booksRepo.find({order: {id: "DESC"}});
-            // reply.send(books);
-            console.log("books");
-            console.log(books);
             
             return reply.send(books);
-            // return books;
 
         }
     });
@@ -64,12 +65,23 @@ export async function bookRoutes(fastify: FastifyInstance){
             body: bookSchema,
             // response: {200: bookSchema}
         },
+        // preHandler: isUserAuthenticated,
+        preValidation: isUserAuthenticated,
         handler: async function (request, reply): Promise<BookBody>{
 
 
             // const { title, author, genre, pages, realeaseYear, isbn, rating } = request.body;
 
             // const newBook: Book = {
+            //const photo1 = new Photo();
+            // photo1.url = "me.jpg";
+            // photo1.user = user;
+            // await connection.manager.save(photo1);
+
+            const {userId} = request.session.user;
+
+            // get user object
+            const user = await getRepository(Users).findOne(userId);
 
             const book = await getRepository(Book).create({
                 title: request.body.title,
@@ -78,7 +90,8 @@ export async function bookRoutes(fastify: FastifyInstance){
                 pages: request.body.pages,
                 realeaseYear: request.body.realeaseYear,
                 isbn: request.body.isbn,
-                rating: <bookRating> request.body.rating
+                rating: <bookRating> request.body.rating,
+                user: user
                 
             });
 

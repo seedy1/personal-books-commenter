@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/schema",
     "$id": "bookings",
     "type": "object",
-    "required": ["title", "author", "realeaseYear", "genre","pages"],
+    "required": ["title", "author", "realeaseYear", "genre", "pages"],
     "additionalProperties": false,
     "properties": {
         "title": { "type": "string" },
@@ -17,6 +17,7 @@
         "rating": {
             "type": "string",
             "enum": ["ONE", "TWO", "THREE", "FOUR", "FIVE"]
-        }
+        },
+        "user": {"type": "object"}
     }
 }

@@ -13,4 +13,7 @@ export interface BookBody {
   pages: number;
   isbn?: string;
   rating?: "ONE" | "TWO" | "THREE" | "FOUR" | "FIVE";
+  user?: {
+    [k: string]: unknown;
+  };
 }

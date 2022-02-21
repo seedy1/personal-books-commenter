@@ -1,5 +1,6 @@
-import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import {hashSync, hash, genSalt, compare} from "bcryptjs";
+import { Book } from "./Book";
 // import { HASH_SALT } from "../lib/dotenv";
 
 @Entity()
@@ -24,6 +25,9 @@ export class Users{
 
     @CreateDateColumn()
     createdAt!: string;
+
+    @OneToMany( ()=> Book, book=> book.user )
+    books?: Book[];
 
 
     // set encrypt password before save

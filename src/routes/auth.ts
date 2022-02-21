@@ -1,4 +1,4 @@
-import { FastifyInstance } from "fastify";
+import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { getRepository } from "typeorm";
 import { Users } from "../models/Users";
 import { User } from "../schemas/types/user";
@@ -7,10 +7,14 @@ import { Login } from "../schemas/types/login";
 import * as userSchema from "../schemas/json/user.json";
 import * as loginSchema from "../schemas/json/login.json";
 
+import { isUserAuthenticated } from "../lib/isUserAuth";
+import { Book } from "../models/Book";
+
 
 export async function authRoutes(fastify: FastifyInstance) {
     fastify.addSchema(userSchema);
     fastify.addSchema(loginSchema);
+    
     
     // register a new user
     fastify.route<{Body: User}>({
@@ -65,7 +69,7 @@ export async function authRoutes(fastify: FastifyInstance) {
 
             // set session
             // request.session.user = {userID: _user.id};
-            request.session.user = {userId: user.id}
+            request.session.user = {userId: user.id, isUserAuthenticated: true}
 
             return reply.send("login route - passowrd matched");
 
@@ -76,10 +80,15 @@ export async function authRoutes(fastify: FastifyInstance) {
     fastify.route({
         method: "GET",
         url: "/profile",
+        preValidation: isUserAuthenticated,
         handler: async function(request, reply){
             
             // TODO: handle no session set error
             const {userId} = request.session.user;
+
+            if(userId == undefined){
+                reply.send("You must be logged in");
+            }
 
             console.log("USER ID: "+userId);
             
@@ -88,24 +97,46 @@ export async function authRoutes(fastify: FastifyInstance) {
 
 
             return reply.send({name: user?.fullName, email: user?.email, memberSince: user?.createdAt});
-            // return reply.send(user);
 
         }
     });
 
-    // logout an clear session
+
+        // get my books
+        fastify.route({
+            method: "GET",
+            url: "/profile/books",
+            preValidation: isUserAuthenticated,
+            handler: async function(request, reply){
+                
+                // TODO: handle no session set error
+                const {userId} = request.session.user;
+                // const user = await getRepository(Users).findOne(userId);
+
+
+                const booksRepo = await getRepository(Book);
+                const userBooks = await booksRepo.find({ relations: ["user"], where: {user: {id: userId}}, order: {id: "DESC"}});
+                return reply.send(userBooks);
+
+            }
+        });
+
+    // logout and delete session
     fastify.route({
         method: "GET",
         url: "/logout",
         handler: async function(request, reply){
-            // TODO: handle no session set error
-            request.destroySession((err)=>{
 
-                if(err) return reply.send("Logout failed");
-                return reply.send("logged out");
+            // request.session.user = null;
+
+            // TODO: logout not working
+            request.destroySession( (err) => {
+                if(err){
+                    return reply.send("Logout failed");
+                }    
             });
+            return reply.send("successfully logged out");
 
-            // return reply.send("logged out");
         }
     });
 }
