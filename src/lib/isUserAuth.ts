@@ -22,4 +22,13 @@ export async function isUserAuthenticated(request: any, reply: any){
     }catch(err){
         throw new Error("Must be signed in.");
     }   
-    }
+}
+
+// export async function isAuthorized(request:any, reply:any){
+//     try{
+
+//     }catch(err){
+
+//     }
+    
+// }

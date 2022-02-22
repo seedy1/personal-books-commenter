@@ -16,9 +16,12 @@ npx tsc --watch and node .\dist\scrap.js
 - [x] book crud test - unit test
 - [x] user auth - fs session and cookie
 - [x] add swagger doc
-- [ x ] link user with books
-- [ ] user auth test
+- [x] link user with books
+- [ ] authorize user edit/delete for books they own
+- [ ] user auth test and book
+- [ ] add islanbul for test coverage
 - [ ] refactor
+- [ ] answer READNE questions for gradings
 
 
 # Checkpoints report for the project

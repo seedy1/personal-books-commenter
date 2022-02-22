@@ -13,8 +13,8 @@ import { swaggerDocs } from "./swaggerDoc";
 
 export const server = fastify({logger: true}) // remove logger for test. optionlly for me
 .register(fastifySwagger, swaggerDocs)
-.register(bookRoutes)
 .register(authRoutes)
+.register(bookRoutes)
 .register(userRoutes)
 .register(fastifyCookie)
 .register(session, {

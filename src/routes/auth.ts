@@ -7,9 +7,6 @@ import { Login } from "../schemas/types/login";
 import * as userSchema from "../schemas/json/user.json";
 import * as loginSchema from "../schemas/json/login.json";
 
-import { isUserAuthenticated } from "../lib/isUserAuth";
-import { Book } from "../models/Book";
-
 
 export async function authRoutes(fastify: FastifyInstance) {
     fastify.addSchema(userSchema);
@@ -25,7 +22,7 @@ export async function authRoutes(fastify: FastifyInstance) {
         },
         handler: async function(request, reply): Promise<User>{
 
-            // use findBy to confrim email doesnt exsit  
+            // use findBy to confirm email doesnt exsit  
             // handled by typeorm
 
             const user = await getRepository(Users).create({
@@ -58,68 +55,32 @@ export async function authRoutes(fastify: FastifyInstance) {
 
             // check email
             if(user == null){
-                return reply.send("Wrong credentials...");
+                return reply.send({
+                    message: "Wrong credentials...",
+                    success: false
+                });
             }
 
             // check password
-            
             if( !(await user.checkPassword(password)) ){
-                return reply.send("Wrong credentials...");    
+                return reply.send({
+                    message: "Wrong credentials...",
+                    success: false
+                });
             }
 
             // set session
             // request.session.user = {userID: _user.id};
             request.session.user = {userId: user.id, isUserAuthenticated: true}
 
-            return reply.send("login route - passowrd matched");
+            return reply.send({
+                message: "login sucessful",
+                success: true
+            });
 
         }
     });
 
-    // get current user info akak just email
-    fastify.route({
-        method: "GET",
-        url: "/profile",
-        preValidation: isUserAuthenticated,
-        handler: async function(request, reply){
-            
-            // TODO: handle no session set error
-            const {userId} = request.session.user;
-
-            if(userId == undefined){
-                reply.send("You must be logged in");
-            }
-
-            console.log("USER ID: "+userId);
-            
-            const userRepo = await getRepository(Users);
-            const user = await userRepo.findOne(userId);
-
-
-            return reply.send({name: user?.fullName, email: user?.email, memberSince: user?.createdAt});
-
-        }
-    });
-
-
-        // get my books
-        fastify.route({
-            method: "GET",
-            url: "/profile/books",
-            preValidation: isUserAuthenticated,
-            handler: async function(request, reply){
-                
-                // TODO: handle no session set error
-                const {userId} = request.session.user;
-                // const user = await getRepository(Users).findOne(userId);
-
-
-                const booksRepo = await getRepository(Book);
-                const userBooks = await booksRepo.find({ relations: ["user"], where: {user: {id: userId}}, order: {id: "DESC"}});
-                return reply.send(userBooks);
-
-            }
-        });
 
     // logout and delete session
     fastify.route({
@@ -135,8 +96,24 @@ export async function authRoutes(fastify: FastifyInstance) {
                     return reply.send("Logout failed");
                 }    
             });
+
+            /*
+            // request.destroySession(() => {
+            //     reply.send({
+            //       success: true
+            //     });
+            
+request.destroySession((err) => {
+      if (err) {
+        throw fastify.httpErrors.internalServerError()
+      }
+      reply.send({
+        message: 'Logout successful',
+      })
+            */
             return reply.send("successfully logged out");
 
         }
     });
+
 }
