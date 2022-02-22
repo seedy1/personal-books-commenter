@@ -88,29 +88,7 @@ export async function authRoutes(fastify: FastifyInstance) {
         url: "/logout",
         handler: async function(request, reply){
 
-            // request.session.user = null;
-
-            // TODO: logout not working
-            request.destroySession( (err) => {
-                if(err){
-                    return reply.send("Logout failed");
-                }    
-            });
-
-            /*
-            // request.destroySession(() => {
-            //     reply.send({
-            //       success: true
-            //     });
-            
-request.destroySession((err) => {
-      if (err) {
-        throw fastify.httpErrors.internalServerError()
-      }
-      reply.send({
-        message: 'Logout successful',
-      })
-            */
+            request.session.user = null;
             return reply.send("successfully logged out");
 
         }
