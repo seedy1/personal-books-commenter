@@ -1,4 +1,4 @@
-import { FastifyInstance } from "fastify";
+import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { getRepository } from "typeorm";
 import { isUserAuthenticated } from "../lib/isUserAuth";
 import { Book } from "../models/Book";
@@ -13,7 +13,12 @@ import { bookRating, Genres } from "../shared/constants";
 
 
 export async function userRoutes(fastify: FastifyInstance){
+
+    fastify.addHook("preHandler", isUserAuthenticated);
+
     fastify.addSchema(bookSchema);
+
+    // async function isAuthorized(request: FastifyRequest, reply: FastifyReply){}
 
 
     // TODO: add hook for prevalidation
@@ -22,7 +27,7 @@ export async function userRoutes(fastify: FastifyInstance){
     fastify.route({
         method: "GET",
         url: "/me",
-        preValidation: isUserAuthenticated,
+        // preValidation: isUserAuthenticated,
         handler: async function(request, reply){
             
             // TODO: handle no session set error
@@ -46,7 +51,7 @@ export async function userRoutes(fastify: FastifyInstance){
     fastify.route({
         method: "GET",
         url: "/me/books",
-        preValidation: isUserAuthenticated,
+        // preValidation: isUserAuthenticated,
         handler: async function(request, reply){
             
             // TODO: handle no session set error
@@ -70,12 +75,33 @@ export async function userRoutes(fastify: FastifyInstance){
         },
         handler: async function (request, reply) {
 
-            const id = request.params.id;
+            const bookId = request.params.id;
+            const {userId} = request.session.user;
+
+            
+
 
             const booksRepo = await getRepository(Book);
-            const book = await booksRepo.findOneOrFail(id);  
+            const book = await booksRepo.findOneOrFail(bookId);
+
+            const userBook = await booksRepo.findOneOrFail(bookId,
+                {
+                relations: ["user"],
+                // where: {user: {id: userId}},
+            });
+
+            
+            // console.log("BE");
+            // console.log("USER: "+userId);
+            // console.log("BOOK: "+userBook?.user?.id);
+            // console.log(userBook);
+
+            if(userBook.user?.id === userId){
+                return reply.send(userBook);  
+            }else{
+                reply.send("not aut...");
+            }
           
-            return reply.send(book);  
         }
     });
 
@@ -90,7 +116,7 @@ export async function userRoutes(fastify: FastifyInstance){
             // response: {200: bookSchema}
         },
         // preHandler: isUserAuthenticated,
-        preValidation: isUserAuthenticated,
+        // preValidation: isUserAuthenticated,
         handler: async function (request, reply): Promise<BookBody>{
 
 
@@ -172,6 +198,7 @@ export async function userRoutes(fastify: FastifyInstance){
     });
 
     //TODO: get all books count then count per user
+    // findAndCount
     
     
 

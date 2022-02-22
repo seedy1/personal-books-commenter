@@ -6,9 +6,11 @@ import { Login } from "../schemas/types/login";
 
 import * as userSchema from "../schemas/json/user.json";
 import * as loginSchema from "../schemas/json/login.json";
+import { isUserAuthenticated } from "../lib/isUserAuth";
 
 
-export async function authRoutes(fastify: FastifyInstance) {
+export async function authRoutes(fastify: FastifyInstance){
+
     fastify.addSchema(userSchema);
     fastify.addSchema(loginSchema);
     
@@ -86,6 +88,7 @@ export async function authRoutes(fastify: FastifyInstance) {
     fastify.route({
         method: "GET",
         url: "/logout",
+        preHandler: isUserAuthenticated,
         handler: async function(request, reply){
 
             request.session.user = null;
