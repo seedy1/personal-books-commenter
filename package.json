@@ -8,7 +8,8 @@
     "lint": "eslint --fix src",
     "test": "mocha --recursive dist/specs --exit --async-stack-traces",
     "testlinux": "NODE_ENV=test mocha --recursive dist/specs --exit --async-stack-traces",
-    "gentypes": "json2ts -i src/schemas/json/ -o src/schemas/types"
+    "gentypes": "json2ts -i src/schemas/json/ -o src/schemas/types",
+    "test-coverage": "nyc --reporter=html --reporter=lcov npm run test"
   },
   "author": "Seedy Jobe",
   "license": "ISC",
@@ -23,6 +24,7 @@
     "eslint": "^8.2.0",
     "json-schema-to-typescript": "^10.1.5",
     "mocha": "^9.2.0",
+    "nyc": "^15.1.0",
     "typescript": "^4.3.2"
   },
   "dependencies": {
