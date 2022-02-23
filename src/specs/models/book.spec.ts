@@ -34,9 +34,6 @@ describe('Books Model', function(){
             expect(reply.statusCode).to.not.equal(200);
         });
 
-        // TODO: delete book
-
-
 
     });
 
