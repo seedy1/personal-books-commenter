@@ -44,7 +44,7 @@ export async function bookRoutes(fastify: FastifyInstance){
 
             const booksRepo = await getRepository(Book);
             const book = await booksRepo.findOneOrFail(id);
-            console.log(book);
+            // console.log(book);
             
             // const book = await booksRepo.findOne(id);
             // later check if(!book)

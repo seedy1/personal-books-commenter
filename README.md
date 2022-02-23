@@ -17,8 +17,8 @@ npx tsc --watch and node .\dist\scrap.js
 - [x] user auth - fs session and cookie
 - [x] add swagger doc
 - [x] link user with books
-- [ ] authorize user edit/delete for books they own
-- [ ] user auth test and book
+- [x] authorize user edit/delete for books they own
+- [ ] 2nd test cycle
 - [ ] add islanbul for test coverage
 - [ ] refactor
 - [ ] answer READNE questions for gradings

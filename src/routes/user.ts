@@ -78,23 +78,14 @@ export async function userRoutes(fastify: FastifyInstance){
             const bookId = request.params.id;
             const {userId} = request.session.user;
 
-            
-
 
             const booksRepo = await getRepository(Book);
-            const book = await booksRepo.findOneOrFail(bookId);
-
             const userBook = await booksRepo.findOneOrFail(bookId,
                 {
                 relations: ["user"],
                 // where: {user: {id: userId}},
             });
 
-            
-            // console.log("BE");
-            // console.log("USER: "+userId);
-            // console.log("BOOK: "+userBook?.user?.id);
-            // console.log(userBook);
 
             if(userBook.user?.id === userId){
                 return reply.send(userBook);  
@@ -146,10 +137,10 @@ export async function userRoutes(fastify: FastifyInstance){
     });
 
 
-    // update
+    // update - PUT
     fastify.route<{Params: QueryId, Body: BookBody}>({
-        method: 'PATCH',
-        // method: 'PUT',
+        // method: 'PATCH',
+        method: 'PUT',
         url: '/me/books/:id',
         schema: {
             params: queryIdSchema,
@@ -160,40 +151,136 @@ export async function userRoutes(fastify: FastifyInstance){
             const id = request.params.id;
             const { title, author, genre, pages, realeaseYear, isbn, rating } = request.body;
 
-            const booksRepo = await getRepository(Book);
-            const book = await booksRepo.findOneOrFail(id);
+            
+            // get user object
+            const {userId} = request.session.user;
+            // const user = await getRepository(Users).findOne(userId);
 
+
+            const booksRepo = await getRepository(Book);
+            // const book = await booksRepo.findOneOrFail(id);
+
+            const book = await booksRepo.findOneOrFail(id,
+                {
+                relations: ["user"],
+            });
             // if(book){}
 
-            book.title = title;
-            book.author = author;
-            book.genre = <Genres> genre;
-            book.pages = pages;
-            book.realeaseYear = realeaseYear;
-            book.isbn = isbn;
-            book.rating = <bookRating> rating;
+            // book.title = title;
+            // book.author = author;
+            // book.genre = <Genres> genre;
+            // book.pages = pages;
+            // book.realeaseYear = realeaseYear;
+            // book.isbn = isbn;
+            // book.rating = <bookRating> rating;
+            // book.user = user;
 
-            const bookUpdate = await booksRepo.save(book);
-            return reply.send(bookUpdate);  
+            if(book.user?.id === userId){
+
+                book.title = title;
+                book.author = author;
+                book.genre = <Genres> genre;
+                book.pages = pages;
+                book.realeaseYear = realeaseYear;
+                book.isbn = isbn;
+                book.rating = <bookRating> rating;
+
+                // return reply.send(userBook);
+                const bookUpdate = await booksRepo.save(book);
+                return reply.send(bookUpdate);
+
+            }else{
+                reply.send("not aut...");
+            }
+
+            // const bookUpdate = await booksRepo.save(book);
+            // return reply.send(bookUpdate);  
         }
     });
+
+    // update - PATCH
+    // partial data
+    // fastify.route<{Params: QueryId, Body: BookBody}>({
+    //     method: 'PATCH',
+    //     url: '/me/books/:id',
+    //     schema: {
+    //         params: queryIdSchema,
+    //     },
+    //     handler: async function (request, reply){
+
+    //         const id = request.params.id;
+    //         const { title, author, genre, pages, realeaseYear, isbn, rating } = request.body;
+
+            
+    //         // get user object
+    //         const {userId} = request.session.user;
+
+
+    //         const booksRepo = await getRepository(Book);
+    //         // const book = await booksRepo.findOneOrFail(id);
+
+    //         const book = await booksRepo.findOneOrFail(id,
+    //             {
+    //             relations: ["user"],
+    //         });
+
+    //         if(book.user?.id === userId){
+
+    //             book.title = title;
+    //             book.author = author;
+    //             book.genre = <Genres> genre;
+    //             book.pages = pages;
+    //             book.realeaseYear = realeaseYear;
+    //             book.isbn = isbn;
+    //             book.rating = <bookRating> rating;
+
+    //             // return reply.send(userBook);
+    //             const bookUpdate = await booksRepo.update(id,{
+
+    //             });
+    //             return reply.send(bookUpdate);
+
+    //         }else{
+    //             reply.send("not aut...");
+    //         }
+    //     }
+    // });
 
     // delete
     fastify.route<{Params: QueryId}>({
         method: 'DELETE',
-        url: '/me/book/:id',
+        url: '/me/books/:id',
         schema: {
             params: queryIdSchema,
-            // response: {200: bookSchema}
         },
         handler: async function (request, reply) {
             const id = request.params.id;
 
-            const booksRepo = await getRepository(Book);
-            const book = await booksRepo.findOneOrFail(id);
+             // get user object
+             const {userId} = request.session.user;
 
-            const bookDelete = await booksRepo.delete(id);
-            return reply.send(bookDelete);  
+             const booksRepo = await getRepository(Book);
+
+             // check if book exist
+             const book = await booksRepo.findOneOrFail(id,
+                 {
+                 relations: ["user"],
+             });
+
+         
+            if(book.user?.id === userId){
+                await booksRepo.delete(id);
+                return reply.send({
+                        message: "delete sucessful",
+                        success: true
+                    });
+            }else{
+                reply.send({
+                    message: "not aut...",
+                    success: false
+                });
+            }
+
         }
     });
 
