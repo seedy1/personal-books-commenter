@@ -6,7 +6,7 @@ import { BookBody } from "../../schemas/types/bookBody";
 
 // unit validation test
 describe('Books Model', function(){
-    describe('# book model crud test', function(){
+    describe('book model public routes', function(){
         
         it('should get 0 as book count on the first run', async function(){
             const bookCount = await getRepository(Book).count();
@@ -18,11 +18,10 @@ describe('Books Model', function(){
                 url: 'books',
                 method: "GET"
             });
-            console.log(reply.statusCode);
             
-            // const bookCount = await getRepository(Book).count();
             expect(reply.statusCode).to.equal(200);
         });
+        
 
         it('should return page not found 404', async function(){
             const reply = await server.inject({

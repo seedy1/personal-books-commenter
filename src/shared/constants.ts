@@ -15,3 +15,6 @@ export enum Genres{
     SCI_FI = "SCI_FI",
     OTHERS = "OTHERS"
 }
+
+
+export const FAILED_LOGIN_MESSAGE = "Login Unseccessful";
