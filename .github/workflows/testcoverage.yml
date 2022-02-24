@@ -38,7 +38,8 @@ jobs:
         uses: PoorlyDefinedBehaviour/nyc-reporter@v1
         with:
           command: "npm test-coverage"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPORTER: "text"
 #     steps:
 #       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 #       - uses: actions/checkout@v2
