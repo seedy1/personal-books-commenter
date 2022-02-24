@@ -19,10 +19,9 @@ jobs:
         check-latest: true
     - run: npm install
 
-    - name: NYC Coverage Report
-      run: npm run test-coverage
 
+    - name: NYC Coverage Report
     - uses: tintef/nyc-reporter-action@0.1.0
       with:
+        command: npm run test-coverage
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        REPORTER: 'text' # defaults to 'text-summary'
