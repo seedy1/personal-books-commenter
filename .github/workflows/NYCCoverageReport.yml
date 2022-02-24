@@ -20,7 +20,7 @@ jobs:
     - run: npm install
 
     - name: NYC Coverage Report
-      run: npm test-coverage
+      run: npm run test-coverage
 
     - uses: tintef/nyc-reporter-action@0.1.0
       with:
