@@ -34,7 +34,7 @@ jobs:
       - name: Report test coverage
         uses: PoorlyDefinedBehaviour/nyc-reporter@v1
         with:
-          command: "yarn test"
+          command: "npm test-coverage"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
 #     steps:
 #       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
