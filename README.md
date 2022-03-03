@@ -20,7 +20,11 @@ npx tsc --watch and node .\dist\scrap.js
 - [x] authorize user edit/delete for books they own
 - [x] add islanbul for test coverage
 - [x] 2nd test cycle
-- [ ] refactor
+- [y] refactor
+- [ ] Add character/chapter feature
+- [ ] add comment feature
+- [ ] final test
+- [ ] github actions
 - [ ] answer READNE questions for gradings
 
 
