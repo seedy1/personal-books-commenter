@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Chapters } from "./Chapters";
 import { Personas } from "./Personas";
 
@@ -14,10 +14,10 @@ export class Comments{
     @CreateDateColumn()
     createdAt!: string;
 
-    @ManyToMany( ()=> Chapters, chapters => chapters.comments)
+    @ManyToOne( ()=> Chapters, chapters => chapters.comments)
     chapter?: Chapters;
 
-    @ManyToMany( ()=> Personas, personas => personas.comments )
+    @ManyToOne( ()=> Personas, personas => personas.comments )
     character?: Personas;
 
 }

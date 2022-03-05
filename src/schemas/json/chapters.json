@@ -5,7 +5,8 @@
     "required": ["chapter"],
     "additionalProperties": false,
     "properties": {
-      "chapter": { "type": "string" },
+      "chapter": { "type": "number" },
+      "description": {"type": "string"},
       "book": { "type": "string" }
     }
   }

@@ -6,6 +6,6 @@
  */
 
 export interface Chapters {
-  chapter: string;
+  chapter: number;
   book?: string;
 }

@@ -6,7 +6,5 @@
  */
 
 export interface Comment {
-  comment?: string;
-  characterId?: number;
-  chapterId?: number;
+  comment: string;
 }

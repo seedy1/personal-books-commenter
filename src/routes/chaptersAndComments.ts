@@ -55,6 +55,7 @@ export async function chaptersAndCommentsRoute(fastify: FastifyInstance){
 
     // get all chapters a book has
     // TODO: move to book/:id
+    // TODO: handle unique error
     fastify.route<{Params: TwoPartQueryId, Body: Comments}>({
         method: "POST",
         url: "/me/books/:bookId/chapters/:chapterId/comment",

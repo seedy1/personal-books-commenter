@@ -11,6 +11,9 @@ export class Chapters{
     @Column({type: "int", unique: true})
     chapter!: number;
 
+    @Column({type: "text", nullable: true})
+    description?: string;
+
     @CreateDateColumn()
     createdAt!: string;
 
