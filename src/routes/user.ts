@@ -86,6 +86,7 @@ export async function userRoutes(fastify: FastifyInstance){
                 // where: {user: {id: userId}},
             });
 
+// TODO: get chapters too
 
             if(userBook.user?.id === userId){
                 return reply.send(userBook);  

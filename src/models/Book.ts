@@ -54,7 +54,7 @@ export class Book{
     createdAt!: string;
 
     @ManyToOne( ()=> Users, users => users.books)
-    user?: Users;
+    user?: Users; // TODO: change to ! - required
 
     @OneToMany( ()=> Personas, personas => personas.book )
     characters?: Personas[];

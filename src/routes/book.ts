@@ -20,7 +20,7 @@ export async function bookRoutes(fastify: FastifyInstance){
         },
         handler: async function (request, reply) {
 
-            const booksRepo = await getRepository(Book);
+            const booksRepo = getRepository(Book);
             const books = await booksRepo.find({order: {id: "DESC"}});
             
             return reply.send(books);
@@ -42,12 +42,12 @@ export async function bookRoutes(fastify: FastifyInstance){
 
             const id = request.params.id;
 
-            const booksRepo = await getRepository(Book);
+            const booksRepo = getRepository(Book);
             const book = await booksRepo.findOneOrFail(id);
-            // console.log(book);
             
             // const book = await booksRepo.findOne(id);
             // later check if(!book)
+            // if()
             return reply.send(book);  
         }
     });

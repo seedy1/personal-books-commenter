@@ -1,13 +1,10 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "$id": "https://example.com/product.schema.json",
+    "$id": "comment",
     "type": "object",
-    "required": ["name", "bookId"],
+    "required": ["comment"],
     "additionalProperties": false,
     "properties": {
-      "comment": { "type": "string"},
-      "characterId": { "type": "number" },
-      "chapterId": { "type": "number"}
-
+      "comment": { "type": "string"}
     }
   }

@@ -1,0 +1,12 @@
+
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "paramingTwice",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["bookId", "chapterId"],
+    "properties": {
+        "bookId": {"type": "integer"},
+        "chapterId": {"type": "integer"}
+    }
+}

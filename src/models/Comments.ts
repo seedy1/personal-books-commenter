@@ -14,7 +14,6 @@ export class Comments{
     @CreateDateColumn()
     createdAt!: string;
 
-    // TODO: what to do?
     @ManyToMany( ()=> Chapters, chapters => chapters.comments)
     chapter?: Chapters;
 

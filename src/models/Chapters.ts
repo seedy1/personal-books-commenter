@@ -18,5 +18,5 @@ export class Chapters{
     book!: Book;
 
     @OneToMany( () => Comments, comments => comments.chapter )
-    comments!: Comments[];
+    comments?: Comments[];
 }
