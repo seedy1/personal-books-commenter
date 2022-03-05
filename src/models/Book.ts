@@ -57,13 +57,9 @@ export class Book{
     user?: Users; // TODO: change to ! - required
 
     @OneToMany( ()=> Personas, personas => personas.book )
-    characters?: Personas[];
+    personas?: Personas[];
 
     @OneToMany( ()=> Chapters, chapter => chapter.book )
     chapters?: Chapters[];
-
-    // get IDA(): number {
-    //     return this.id;
-    //   }
 
 }

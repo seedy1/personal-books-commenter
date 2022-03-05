@@ -44,7 +44,7 @@ export async function bookRoutes(fastify: FastifyInstance){
 
             const booksRepo = getRepository(Book);
             const book = await booksRepo.findOneOrFail(id,{
-                relations: ["chapters", "chapters.comments"]
+                relations: ["chapters", "chapters.comments", "personas", "personas.comments"]
             });
             
             // const book = await booksRepo.findOne(id);

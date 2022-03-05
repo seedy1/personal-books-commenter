@@ -4,9 +4,9 @@
     "$id": "paramingTwice",
     "type": "object",
     "additionalProperties": false,
-    "required": ["bookId", "chapterId"],
+    "required": ["bookId", "id"],
     "properties": {
         "bookId": {"type": "integer"},
-        "chapterId": {"type": "integer"}
+        "id": {"type": "integer"}
     }
 }

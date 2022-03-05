@@ -3,6 +3,7 @@ import { authRoutes } from "../routes/auth";
 import { bookRoutes } from "../routes/book";
 import { userRoutes } from "../routes/user";
 import { chaptersAndCommentsRoute } from "../routes/chaptersAndComments";
+import { personasAndCommentsRoute } from "../routes/personasAndComments";
 
 import cookie, { fastifyCookie } from "fastify-cookie";
 import session from "fastify-session";
@@ -18,6 +19,7 @@ export const server = fastify({logger: true}) // remove logger for test. optionl
 .register(bookRoutes)
 .register(userRoutes)
 .register(chaptersAndCommentsRoute)
+.register(personasAndCommentsRoute)
 .register(fastifyCookie)
 .register(session, {
     secret: SESSION_SECRET,

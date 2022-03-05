@@ -1,11 +1,12 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "$id": "characters",
+    "$id": "personas",
     "type": "object",
-    "required": ["name", "bookId"],
+    "required": ["characterName"],
     "additionalProperties": false,
     "properties": {
       "characterName": { "type": "string" },
-      "bookId": { "type": "number" }
+      "description": {"type": "string"},
+      "book": { "type": "string" }
     }
   }

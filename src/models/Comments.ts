@@ -18,6 +18,6 @@ export class Comments{
     chapter?: Chapters;
 
     @ManyToOne( ()=> Personas, personas => personas.comments )
-    character?: Personas;
+    persona?: Personas;
 
 }

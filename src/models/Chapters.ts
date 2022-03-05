@@ -17,7 +17,7 @@ export class Chapters{
     @CreateDateColumn()
     createdAt!: string;
 
-    @ManyToOne( ()=> Book, book => book.characters)
+    @ManyToOne( ()=> Book, book => book.personas)
     book!: Book;
 
     @OneToMany( () => Comments, comments => comments.chapter )

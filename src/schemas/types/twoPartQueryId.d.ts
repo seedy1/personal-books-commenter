@@ -7,5 +7,5 @@
 
 export interface TwoPartQueryId {
   bookId: number;
-  chapterId: number;
+  id: number;
 }

@@ -5,8 +5,8 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface Chapters {
-  chapter: number;
+export interface Persona {
+  characterName: string;
   description?: string;
   book?: string;
 }

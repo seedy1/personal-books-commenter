@@ -82,7 +82,7 @@ export async function userRoutes(fastify: FastifyInstance){
             const booksRepo = await getRepository(Book);
             const userBook = await booksRepo.findOneOrFail(bookId,
                 {
-                relations: ["user", "chapters", "chapters.comments"],
+                relations: ["user", "chapters", "chapters.comments", "personas", "personas.comments"],
                 // where: {user: {id: userId}},
             });
 

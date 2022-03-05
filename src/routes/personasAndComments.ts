@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify";
 import { getRepository } from "typeorm";
 import { isUserAuthenticated } from "../lib/isUserAuth";
 
-import * as chaptersSchema from "../schemas/json/chapters.json";
+import * as personaSchema from "../schemas/json/persona.json";
 import * as commentSchema from "../schemas/json/comment.json";
 import * as queryIdSchema from "../schemas/json/queryId.json";
 import * as doubleQueryIdSchema from "../schemas/json/twoPartQueryId.json";
@@ -10,56 +10,52 @@ import * as doubleQueryIdSchema from "../schemas/json/twoPartQueryId.json";
 import { TwoPartQueryId } from "../schemas/types/twoPartQueryId";
 import { QueryId } from "../schemas/types/queryId";
 import { Book } from "../models/Book";
-import { Chapters } from "../models/Chapters";
+import { Personas } from "../models/Personas";
 import { Comments } from "../models/Comments";
 
 
-export async function chaptersAndCommentsRoute(fastify: FastifyInstance){
+export async function personasAndCommentsRoute(fastify: FastifyInstance){
 
     fastify.addHook("preHandler", isUserAuthenticated);
-    fastify.addSchema(chaptersSchema);
+    fastify.addSchema(personaSchema);
     fastify.addSchema(commentSchema);
     fastify.addSchema(queryIdSchema);
     fastify.addSchema(doubleQueryIdSchema);
 
 
-    // you can only add and delete chapters
-
-    // add a chapter for a book
-    fastify.route<{Params: QueryId, Body: Chapters}>({
+    // add a persona to a book
+    fastify.route<{Params: QueryId, Body: Personas}>({
         method: "POST",
-        url: "/me/books/:id/chapters",
+        url: "/me/books/:id/personas",
         schema: {
             params: queryIdSchema,
-            body: chaptersSchema
+            body: personaSchema
         },
         handler: async function (request, reply) {
 
             const id = request.params.id; //current book id
             const currentBook = await getRepository(Book).findOne(id);
 
-            const chapter = await getRepository(Chapters).create({
-                chapter: request.body.chapter, // chapter is a number
+            const persona = await getRepository(Personas).create({
+                characterName: request.body.characterName,
                 description: request.body.description,
                 book: currentBook
             });
 
-            await getRepository(Chapters).save(chapter);
+            await getRepository(Personas).save(persona);
 
             return reply.send({
-                message: "New Chapter Added",
+                message: "New Character Persona Added",
                 success: true
             });
         }
     });
 
 
-    // get all chapters a book has
-    // TODO: move to book/:id
-    // TODO: handle unique error
+    // add a comment to a persona of a book
     fastify.route<{Params: TwoPartQueryId, Body: Comments}>({
         method: "POST",
-        url: "/me/books/:bookId/chapters/:id/comment",
+        url: "/me/books/:bookId/personas/:id/comment",
         schema: {
             params: doubleQueryIdSchema,
             body: commentSchema
@@ -67,13 +63,13 @@ export async function chaptersAndCommentsRoute(fastify: FastifyInstance){
         handler: async function (request, reply) {
 
             const bookId = request.params.bookId; //current book id
-            const chapterId = request.params.id;
+            const personaId = request.params.id;
 
-            const currentChapter = await getRepository(Chapters).findOne(chapterId);
+            const currentPersona = await getRepository(Personas).findOne(personaId);
 
             const comment = await getRepository(Comments).create({
                 comment: request.body.comment,
-                chapter: currentChapter
+                persona: currentPersona
             });
 
             await getRepository(Comments).save(comment);
