@@ -272,7 +272,7 @@ export async function userRoutes(fastify: FastifyInstance){
             if(book.user?.id === userId){
                 await booksRepo.delete(id);
                 return reply.send({
-                        message: "delete sucessful",
+                        message: "delete successful",
                         success: true
                     });
             }else{

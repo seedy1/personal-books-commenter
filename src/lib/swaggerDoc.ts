@@ -16,10 +16,6 @@ export const swaggerDocs: SwaggerOptions = {
         schemes: ["http"],
         consumes: ["application/json"],
         produces: ["application/json"],
-        tags: [
-          { name: "public", description: "public end-points. Anyone can have access" },
-          { name: "private", description: "private auth needed end-points" }
-        ],
     },
 
     exposeRoute: true
