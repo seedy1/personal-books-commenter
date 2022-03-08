@@ -82,10 +82,11 @@ export async function userRoutes(fastify: FastifyInstance){
             const booksRepo = await getRepository(Book);
             const userBook = await booksRepo.findOneOrFail(bookId,
                 {
-                relations: ["user"],
+                relations: ["user", "chapters", "chapters.comments", "personas", "personas.comments"],
                 // where: {user: {id: userId}},
             });
 
+// TODO: get chapters too
 
             if(userBook.user?.id === userId){
                 return reply.send(userBook);  
@@ -271,7 +272,7 @@ export async function userRoutes(fastify: FastifyInstance){
             if(book.user?.id === userId){
                 await booksRepo.delete(id);
                 return reply.send({
-                        message: "delete sucessful",
+                        message: "delete successful",
                         success: true
                     });
             }else{

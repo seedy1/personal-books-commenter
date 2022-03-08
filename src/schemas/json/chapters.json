@@ -1,11 +1,12 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "$id": "https://example.com/product.schema.json",
+    "$id": "chapetrs",
     "type": "object",
-    "required": ["chapter", "book"],
+    "required": ["chapter"],
     "additionalProperties": false,
     "properties": {
-      "chapter": { "type": "string" },
+      "chapter": { "type": "number" },
+      "description": {"type": "string"},
       "book": { "type": "string" }
     }
   }

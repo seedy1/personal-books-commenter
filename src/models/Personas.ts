@@ -12,6 +12,9 @@ export class Personas{
     @Column({type: "varchar", unique: true})
     characterName!: string;
 
+    @Column({type: "text", nullable: true})
+    description?: string;
+
     @CreateDateColumn()
     createdAt!: string;
 
@@ -19,7 +22,7 @@ export class Personas{
     book!: Book;
 
     // comments
-    @OneToMany( () => Comments, comments => comments.character )
+    @OneToMany( () => Comments, comments => comments.persona )
     comments?: Comments[];
 
 }

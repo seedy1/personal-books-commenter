@@ -11,12 +11,15 @@ export class Chapters{
     @Column({type: "int", unique: true})
     chapter!: number;
 
+    @Column({type: "text", nullable: true})
+    description?: string;
+
     @CreateDateColumn()
     createdAt!: string;
 
-    @ManyToOne( ()=> Book, book => book.characters)
+    @ManyToOne( ()=> Book, book => book.personas)
     book!: Book;
 
     @OneToMany( () => Comments, comments => comments.chapter )
-    comments!: Comments[];
+    comments?: Comments[];
 }

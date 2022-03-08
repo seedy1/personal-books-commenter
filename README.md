@@ -1,7 +1,7 @@
 npx tsc --watch and node .\dist\scrap.js 
 "test": "set NODE_ENV=test && mocha --recursive dist/specs --exit --async-stack-traces",
 
-# NAME
+# NAME perosnal book jornal
 
 ## DESCRIPTION
 
@@ -20,9 +20,9 @@ npx tsc --watch and node .\dist\scrap.js
 - [x] authorize user edit/delete for books they own
 - [x] add islanbul for test coverage
 - [x] 2nd test cycle
-- [y] refactor
-- [ ] Add character/chapter feature
-- [ ] add comment feature
+- [x] refactor ish
+- [x] Add (persona and chapter and comment) feature
+- [x] edit and delete (persona and chapter and comment) feature
 - [ ] final test
 - [ ] github actions
 - [ ] answer READNE questions for gradings
