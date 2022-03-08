@@ -164,7 +164,7 @@ export async function chaptersAndCommentsRoute(fastify: FastifyInstance){
 
             const commentRepo = await getRepository(Comments);
 
-            const currentComment = await getRepository(Chapters).findOneOrFail(chapterId);
+            const currentChapter = await getRepository(Chapters).findOneOrFail(chapterId);
 
             await commentRepo.delete(commentId);
 

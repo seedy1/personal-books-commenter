@@ -11,7 +11,7 @@ node_modules
 .env.test
 
 # lock files
-package-lock.json
+# package-lock.json
 
 scrap.txt
 

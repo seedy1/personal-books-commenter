@@ -22,7 +22,7 @@ npx tsc --watch and node .\dist\scrap.js
 - [x] 2nd test cycle
 - [x] refactor ish
 - [x] Add (persona and chapter and comment) feature
-- [ ] edit and delete (persona and chapter and comment) feature
+- [x] edit and delete (persona and chapter and comment) feature
 - [ ] final test
 - [ ] github actions
 - [ ] answer READNE questions for gradings
