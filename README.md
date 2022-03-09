@@ -113,11 +113,18 @@ To do this one just simply runs `npm gentypes`. To do this automatically I can w
 - [x] Check the current user is allowed to call this endpoint. **[1 point]** 🔵
 > How did you achieve this?
 
-- [ ] Check the current user is allowed to perform the action on a specific resource. **[1 point]** 🔵
+I achieve this by using fastify hooks and prehandler at the same time as seen in src\routes\user.ts line 17.
+
+- [x] Check the current user is allowed to perform the action on a specific resource. **[1 point]** 🔵
+> How did you achieve this?
+I achieve this by first checking if the user is logged in, then I check if the user owns the resource to make changes. I do this in line 91. I checked if the book user id is the same as the current users ID.
+
+
+- [x] Did you build or use an authorisation framework, making the authorisation widely used in your code base? **[1 point]**
 > How did you achieve this?
 
-- [ ] Did you build or use an authorisation framework, making the authorisation widely used in your code base? **[1 point]**
-> How did you achieve this?
+I used a combination of fastify-session and fastify-cookie to handle my authentication. It is injected into the fastify code so available throughtout my code/app. In the file src\lib\fastify.ts from line 24-31 I register the authentication 'protocols' to the fastify server/app which makes it available in all of my codebase.
+
 
 - [ ] Do you have any way to ensure authorisation is checked on every endpoint? **[1 point]**
 > It is pretty easy to forget authorising some action.
@@ -129,27 +136,39 @@ To do this one just simply runs `npm gentypes`. To do this automatically I can w
 
 ### Secret and configuration management
 
-- [ ] Use a hash for any sensitive data you do not need to store as plain text. 🔵
+- [x] Use a hash for any sensitive data you do not need to store as plain text. 🔵
 > Also check this if you do not store any password or such data (and say it here).
 
-- [ ] Store your configuration entries in environment variables or outside the git scope. **[1 point]** 🔵
+I did hash all sensitive data (only have password as a sensitive data) and stored their hashed value in the database, and not their plain text form. To acheive this I used TYPEORMs beforeSave)() hook to hash any password. See src\models\Users.ts the method starting at line 36.
+
+- [x] Store your configuration entries in environment variables or outside the git scope. **[1 point]** 🔵
 > How did you achieve this?
 
-- [ ] Do you provide a way to list every configuration entries (setup instructions, documentation, requireness... are appreciated)? **[1 point]**
+I used te .env package which enables me to keep configuration variables outside git scope.
+
+- [x] Do you provide a way to list every configuration entries (setup instructions, documentation, requireness... are appreciated)? **[1 point]**
 > How did you achieve this?
+
+Yes on top of this README.md file I give configuration instructions to be able to run the application.
 
 - [ ] Do you have a kind of configuration validation with meaningful error messages? **[1 point]**
 > How did you achieve this?
 
 ### Package management
 
-- [ ] Do not use any package with less than 50k downloads a week. 🔵
+- [x] Do not use any package with less than 50k downloads a week. 🔵
 
-- [ ] Did you write some automated tools that check no unpopular dependency was installed? If yes, ensure it runs frequently. **[1 point]**
+No :-)
+
+- [x] Did you write some automated tools that check no unpopular dependency was installed? If yes, ensure it runs frequently. **[1 point]**
 > How did you achieve this? A Github Action (or similar) and compliance rule for pull requests are appreciated.
 
-- [ ] Properly use dependencies and devDevepencies in your package.json. **[0.5 points]**
+I did not.
+
+- [x] Properly use dependencies and devDevepencies in your package.json. **[0.5 points]**
 > How did you achieve this?
+
+I made sure to use --save-dev for packages which would only be used for development purposes and npm will put them in the devDevepencies section.
 
 ### Automated API generation
 

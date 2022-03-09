@@ -20,7 +20,7 @@ export function initConnection(){
         logging: true,
         synchronize: true
     })
-};
+}
 
 export function TestInitConnection(){
     return createConnection({
@@ -34,4 +34,4 @@ export function TestInitConnection(){
         logging: true,
         synchronize: true
     })
-};
+}

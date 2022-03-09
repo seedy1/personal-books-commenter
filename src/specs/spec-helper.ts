@@ -34,5 +34,5 @@ async function clearDB(kind: string){
 
   console.log('DB cleared...');
 
-};
+}
 
