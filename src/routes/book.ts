@@ -36,7 +36,6 @@ export async function bookRoutes(fastify: FastifyInstance){
         url: '/books/:id',
         schema: {
             params: queryIdSchema,
-            // response: {200: bookSchema}
         },
         handler: async function (request, reply) {
 

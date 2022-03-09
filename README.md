@@ -4,12 +4,42 @@ npx tsc --watch and node .\dist\scrap.js
 # NAME perosnal book jornal
 
 ## DESCRIPTION
+add later
 
 ## HOW TO RUN
 
-## important commands 
+## Setups
 
-`npm i`
+### 1. Install and setup node on your system
+### 2. Install and setup Mysql and create a database and a test databaase
+### 3. Add an .env file to the root folder and add the follwoing values accrodingly.
+- DATABASE_NAME=
+- TEST_DATABASE_NAME=
+- DATABASE_USER=
+- DATABASE_PASSWORD=
+- DATABASE_PORT=
+- DATABASE_HOST=
+- PORT=
+- BYCRYPT_SALT=
+- SESSION_SECRET=
+
+## Important commands 
+### 1. Run the following commands to start the application
+>`npm i`
+
+>`npm gentypes`
+
+>`node .\dist\index.js`
+
+### 2. Run the following commands for testing
+>`npm test` for testing
+
+>`npm test-coverage` for coverage reporting
+
+### To run in production do the following
+- skrtt
+- skrtt
+
 ## TODO
 
 - [x] book crud
@@ -62,18 +92,25 @@ In your explanation, please provide links (file + line) to relevant parts of you
 
 ### Input validation
 
-- [ ] Strictly and deeply validate the type of every input (`params, querystring, body`) at runtime before any processing. **[1 point]** 🔵
+- [x] Strictly and deeply validate the type of every input (`params, querystring, body`) at runtime before any processing. **[1 point]** 🔵
 > How did you achieve this?
 
-- [ ] Ensure the type of every input can be inferred by Typescript at any time and properly propagates across the app. **[1 point]** 🔵
+I achieved this by using fastify's input validator. I do this by first creating a JSON schema with the accedpted fields and their types. Example src\schemas\json\user.json file is used to validate input src\routes\auth.ts in line 23. This is used in all places where an input is required. For Params I also did the same as seen in src\schemas\json\queryId.json which can been seen in src\routes\book.ts line 38.
+
+----------------------
+- [x] Ensure the type of every input can be inferred by Typescript at any time and properly propagates across the app. **[1 point]** 🔵
 > How did you achieve this?
+
+I achieved this using the json2ts package-https://www.npmjs.com/package/json2ts. When ever I updated a schema I ran `npm gentypes` which would generate/update the types from the JSON schemas.
 
 - [ ] Ensure the static and runtime input types are always synced. **[1 point]** 🔵
 > How did you achieve this? If extra commands must be run before the typescript checking, how do you ensure there are run?
 
+To do this one just simply runs `npm gentypes`. To do this automatically I can watch the schema schema files for any changes and run `npm gentypes`.
+
 ### Authorisation
 
-- [ ] Check the current user is allowed to call this endpoint. **[1 point]** 🔵
+- [x] Check the current user is allowed to call this endpoint. **[1 point]** 🔵
 > How did you achieve this?
 
 - [ ] Check the current user is allowed to perform the action on a specific resource. **[1 point]** 🔵
