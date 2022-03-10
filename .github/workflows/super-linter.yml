@@ -11,7 +11,7 @@ jobs:
     - name: Install modules
       run: npm install
     - name: Run ESLint
-      run: eslint . --ext .ts,.tsx
+      run: npm lint
 
 # # You can adjust the behavior by modifying this file.
 # # For more information, see:
