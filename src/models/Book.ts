@@ -2,24 +2,25 @@ import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGenerate
 import { Chapters } from "./Chapters";
 import { Personas } from "./Personas";
 import { Users } from "./Users";
+import { bookRating, Genres } from "../shared/constants";
 
-enum bookRating{
-    ONE = "ONE",
-    TWO = "TWO",
-    THREE = "THREE",
-    FOUR = "FOUR",
-    FIVE = "FIVE"
-}
+// enum bookRating{
+//     ONE = "ONE",
+//     TWO = "TWO",
+//     THREE = "THREE",
+//     FOUR = "FOUR",
+//     FIVE = "FIVE"
+// }
 
-// use later
-enum Genres{
-    FICTION = "FICTION",
-    NON_FICTION = "NON_FICTION",
-    DRAMA = "DRAMA",
-    THRILLER = "THRILLER",
-    SCI_FI = "SCI_FI",
-    OTHERS = "OTHERS"
-}
+// // use later
+// enum Genres{
+//     FICTION = "FICTION",
+//     NON_FICTION = "NON_FICTION",
+//     DRAMA = "DRAMA",
+//     THRILLER = "THRILLER",
+//     SCI_FI = "SCI_FI",
+//     OTHERS = "OTHERS"
+// }
 
 // add unique for title
 @Entity()
@@ -54,7 +55,7 @@ export class Book{
     createdAt!: string;
 
     @ManyToOne( ()=> Users, users => users.books)
-    user?: Users; // TODO: change to ! - required
+    user!: Users; // TODO: change to ! - required
 
     @OneToMany( ()=> Personas, personas => personas.book )
     personas?: Personas[];

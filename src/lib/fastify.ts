@@ -5,7 +5,7 @@ import { userRoutes } from "../routes/user";
 import { chaptersAndCommentsRoute } from "../routes/chaptersAndComments";
 import { personasAndCommentsRoute } from "../routes/personasAndComments";
 
-import cookie, { fastifyCookie } from "fastify-cookie";
+import { fastifyCookie } from "fastify-cookie";
 import session from "fastify-session";
 
 import { SESSION_SECRET } from "./dotenv";

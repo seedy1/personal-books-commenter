@@ -21,7 +21,6 @@ export class Personas{
     @ManyToOne( ()=> Book, book => book.chapters)
     book!: Book;
 
-    // comments
     @OneToMany( () => Comments, comments => comments.persona )
     comments?: Comments[];
 

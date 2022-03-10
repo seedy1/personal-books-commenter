@@ -188,8 +188,10 @@ I made sure to use --save-dev for packages which would only be used for developm
 
 ### Error management
 
-- [ ] Do not expose internal application state or code (no sent stacktrace in production!). **[1 point]** 🔵
+- [x] Do not expose internal application state or code (no sent stacktrace in production!). **[1 point]** 🔵
 > How did you achieve this?
+I achieved this in two ways; The first was to implement a custom validator and made sure no internal server state was exposed.
+ The second is to turn off fastify logging. The best way to acheive this is to use the SET NODE_ENV=production file ... and set this is false using an .env file import.
 
 - [ ] Do you report errors to Sentry, Rollbar, Stackdriver… **[1 point]**
 > How did you achieve this?
@@ -204,10 +206,18 @@ I made sure to use --save-dev for packages which would only be used for developm
 
 ### Asynchronous first
 
-- [ ] Always use the async implementations when available. **[1 point]** 🔵
+- [x] Always use the async implementations when available. **[1 point]** 🔵
 > List all the functions you call in their async implementation instead of the sync one.
 > 
 > Ex: I used `await fs.readFile` in file `folder/xxx.ts:120` instead of `fs.readFileSync`.
+
+I used `await genSalt()` in file `src\models\Users.ts` instead of `genSaltSync` in line 33.
+
+I used `await hash()` in file `src\models\Users.ts` instead of `hashSync` in line 34.
+
+I used `await ` in file `src\models\Users.ts` instead of `` in line 00.
+
+Also in all Fastify route definitions I used 
 
 - [ ] No unhandled promise rejections, no uncaught exceptions… **[1 point]** 🔵
 > For example, how do you ensure every promise rejection is caught and properly handled?
@@ -215,11 +225,17 @@ I made sure to use --save-dev for packages which would only be used for developm
 
 ### Code quality
 
-- [ ] Did you put a focus on reducing code duplication? **[1 point]**
+- [x] Did you put a focus on reducing code duplication? **[1 point]**
 > How did you achieve this?
 
-- [ ] Eslint rules are checked for any pushed commit to develop or master branch. **[1 point]**
+I achieved this by modularizing my application and always having the DRY methodology behnd my head everytime.
+For example I have a models folder which is used in both the test and dev databases. Instead of having user and user_test tables/models, I only have one user model which I used throughout the app.
+Also created a shared fastify server in `src\lib\fastify.ts` which is being used for both dev run and test runs.
+
+- [x] Eslint rules are checked for any pushed commit to develop or master branch. **[1 point]**
 > Please provide a link to the sample of Github Action logs (or similar).
+
+For every push to master I have a github action that runs the linter to check and log for any errors and warnings.
 
 ### Automated tests
 
