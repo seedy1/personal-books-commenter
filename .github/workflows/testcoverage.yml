@@ -23,10 +23,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - uses: bahmutov/npm-install@v1
-
       - name: Install Packages
         run: npm install
+
+      - uses: bahmutov/npm-install@v1
+
 
       - name: Report test coverage
         uses: PoorlyDefinedBehaviour/nyc-reporter@v1
