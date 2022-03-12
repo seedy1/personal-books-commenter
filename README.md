@@ -1,8 +1,5 @@
 # NAME perosnal book jornal
 
-## DESCRIPTION
-add later
-
 ## HOW TO RUN
 
 ## Setups
