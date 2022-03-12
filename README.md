@@ -1,4 +1,4 @@
-# NAME perosnal book jornal
+# PERSONAL NOVEL JOURNAL
 
 ## HOW TO RUN
 
