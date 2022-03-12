@@ -9,7 +9,7 @@
     "test": "mocha --recursive dist/specs --exit --async-stack-traces",
     "testlinux": "NODE_ENV=test mocha --recursive dist/specs --exit --async-stack-traces",
     "gentypes": "json2ts -i src/schemas/json/ -o src/schemas/types",
-    "test-coverage": "nyc --reporter=html npm run test"
+    "test-coverage": "nyc --reporter=html --reporter=text npm run test"
   },
   "author": "Seedy Jobe",
   "license": "ISC",

@@ -258,8 +258,13 @@ For every push to master I have a github action that runs the linter to check an
 - [ ] You implemented automated specs. **[1 point]** 🔵
 > Please provide a link to the more complete summary you have.
 
-- [ ] Your test code coverage is 75% or more.  **[1 point]** 🔵
+- [x] Your test code coverage is 75% or more.  **[1 point]** 🔵
 > Please provide a link to the `istanbul` HTML coverage summary (or from a similar tool).
+
+Test coverage can be found in the `coverage` folder.
+Here is a scresshot of a recent run.
+![text coverage image](tc.png)
+
 
 - [ ] Do you run the test on a CD/CI, such as Github Action? **[1 point]**
 > Please provide a link to the latest test summary you have, hosted on Github Action or similar.
