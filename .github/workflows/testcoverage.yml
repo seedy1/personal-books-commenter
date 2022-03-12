@@ -1,37 +1,26 @@
-name: "NYC REPORTER"
+name: 'Run test coverage'
 
 on:
-  push:
-      branches: [ master ]
   pull_request:
     branches:
       - '*'
 
 jobs:
-  check:
+  run-tests:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.15.0]
-
     steps:
-      - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12'
+        check-latest: true
+    - run: npm install
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
+    - name: Run tests
+      run: npm run test-coverage
 
-      - name: Install Packages
-        run: npm install
-
-      - uses: bahmutov/npm-install@v1
-
-      - name: Run test Coverage
-      - run: npm run test-coverage
-      
-      - uses: tintef/nyc-reporter-action@0.1.0
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPORTER: 'text'
+    - uses: tintef/nyc-reporter-action
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REPORTER: 'text' # defaults to 'text-summary'

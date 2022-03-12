@@ -262,7 +262,7 @@ For every push to master I have a github action that runs the linter to check an
 > Please provide a link to the `istanbul` HTML coverage summary (or from a similar tool).
 
 Test coverage can be found in the `coverage` folder.
-Here is a scresshot of a recent run.
+Here is a screenshot of a recent run.
 ![text coverage image](tc.png)
 
 
