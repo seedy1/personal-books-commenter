@@ -28,8 +28,10 @@ jobs:
 
       - uses: bahmutov/npm-install@v1
 
-
-      - name: Report test coverage
-        uses: PoorlyDefinedBehaviour/nyc-reporter@v1
-        run: npm run test-coverage
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run test Coverage
+      - run: npm run test-coverage
+      
+      - uses: tintef/nyc-reporter-action@0.1.0
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPORTER: 'text'
