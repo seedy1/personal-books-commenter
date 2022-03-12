@@ -2,6 +2,7 @@ import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGenerate
 import { Book } from "./Book";
 import { Comments } from "./Comments";
 
+/** Persona Model */
 @Entity()
 export class Personas{
     // Characters is sql reserved and Cast so I used people in lack of a better name

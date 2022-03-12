@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { FastifyInstance } from "fastify";
 import { getRepository } from "typeorm";
 import { isUserAuthenticated } from "../lib/isUserAuth";
 import { Book } from "../models/Book";
@@ -15,19 +15,16 @@ import { bookRating, Genres } from "../shared/constants";
 export async function userRoutes(fastify: FastifyInstance){
 
     fastify.addHook("preHandler", isUserAuthenticated);
-
     fastify.addSchema(bookSchema);
 
-    // async function isAuthorized(request: FastifyRequest, reply: FastifyReply){}
 
-
-    // TODO: add hook for prevalidation
-
-    // get current user info akak just email
+// get user profile
     fastify.route({
         method: "GET",
         url: "/me",
-        // preValidation: isUserAuthenticated,
+        schema: {
+            tags: ["private"]
+        },
         handler: async function(request, reply){
             
             // TODO: handle no session set error
@@ -36,10 +33,8 @@ export async function userRoutes(fastify: FastifyInstance){
             if(userId == undefined){
                 reply.send("You must be logged in");
             }
-
-            // console.log("USER ID: "+userId);
             
-            const userRepo = await getRepository(Users);
+            const userRepo = getRepository(Users);
             const user = await userRepo.findOne(userId);
 
             return reply.send({name: user?.fullName, email: user?.email, memberSince: user?.createdAt});
@@ -51,13 +46,14 @@ export async function userRoutes(fastify: FastifyInstance){
     fastify.route({
         method: "GET",
         url: "/me/books",
-        // preValidation: isUserAuthenticated,
+        schema:{
+            tags: ["private", "book"],
+        },
         handler: async function(request, reply){
             
-            // TODO: handle no session set error
             const {userId} = request.session.user;
 
-            const booksRepo = await getRepository(Book);
+            const booksRepo = getRepository(Book);
             const userBooks = await booksRepo.find({ relations: ["user"], where: {user: {id: userId}}, order: {id: "DESC"}});
             return reply.send(userBooks);
 
@@ -71,6 +67,7 @@ export async function userRoutes(fastify: FastifyInstance){
         url: '/me/books/:id',
         schema: {
             params: queryIdSchema,
+            tags: ["private", "book"]
             // response: {200: bookSchema}
         },
         handler: async function (request, reply) {
@@ -79,14 +76,13 @@ export async function userRoutes(fastify: FastifyInstance){
             const {userId} = request.session.user;
 
 
-            const booksRepo = await getRepository(Book);
+            const booksRepo = getRepository(Book);
             const userBook = await booksRepo.findOneOrFail(bookId,
                 {
                 relations: ["user", "chapters", "chapters.comments", "personas", "personas.comments"],
                 // where: {user: {id: userId}},
             });
 
-// TODO: get chapters too
 
             if(userBook.user?.id === userId){
                 return reply.send(userBook);  
@@ -105,10 +101,8 @@ export async function userRoutes(fastify: FastifyInstance){
         url: '/me/books',
         schema: {
             body: bookSchema,
-            // response: {200: bookSchema}
+            tags: ["book", "private"]
         },
-        // preHandler: isUserAuthenticated,
-        // preValidation: isUserAuthenticated,
         handler: async function (request, reply): Promise<BookBody>{
 
 
@@ -117,7 +111,7 @@ export async function userRoutes(fastify: FastifyInstance){
             // get user object
             const user = await getRepository(Users).findOne(userId);
 
-            const book = await getRepository(Book).create({
+            const book = getRepository(Book).create({
                 title: request.body.title,
                 author: request.body.author,
                 genre: Genres[request.body.genre],

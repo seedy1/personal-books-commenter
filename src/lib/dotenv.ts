@@ -1,6 +1,7 @@
-import * as dotenv from "dotenv";
+// import * as dotenv from "dotenv";
 
-require('dotenv').config() 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-var-requires
+require('dotenv').config()
 
 // const hidden = process.env;
 export interface ProcessEnv {

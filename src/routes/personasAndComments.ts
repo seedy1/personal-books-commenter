@@ -32,14 +32,15 @@ export async function personasAndCommentsRoute(fastify: FastifyInstance){
         url: "/me/books/:id/personas",
         schema: {
             params: queryIdSchema,
-            body: personaSchema
+            body: personaSchema,
+            tags: ["private"]
         },
         handler: async function (request, reply) {
 
             const id = request.params.id; //current book id
             const currentBook = await getRepository(Book).findOne(id);
 
-            const persona = await getRepository(Personas).create({
+            const persona = getRepository(Personas).create({
                 characterName: request.body.characterName,
                 description: request.body.description,
                 book: currentBook
@@ -63,9 +64,9 @@ export async function personasAndCommentsRoute(fastify: FastifyInstance){
         },
         handler: async function(request, reply){
 
-            const bookId = request.params.bookId;
+            // const bookId = request.params.bookId;
             const personaId = request.params.id;
-            const {userId} = request.session.user;
+            // const {userId} = request.session.user;
             const {characterName, description} = request.body;
 
             const personasRepo = getRepository(Personas);
@@ -93,7 +94,8 @@ export async function personasAndCommentsRoute(fastify: FastifyInstance){
         url: "/me/books/:bookId/personas/:id/comment",
         schema: {
             params: doubleQueryIdSchema,
-            body: commentSchema
+            body: commentSchema,
+            tags: ["private"]
         },
         handler: async function (request, reply) {
 
@@ -102,7 +104,7 @@ export async function personasAndCommentsRoute(fastify: FastifyInstance){
 
             const currentPersona = await getRepository(Personas).findOne(personaId);
 
-            const comment = await getRepository(Comments).create({
+            const comment = getRepository(Comments).create({
                 comment: request.body.comment,
                 persona: currentPersona
             });
@@ -124,6 +126,7 @@ export async function personasAndCommentsRoute(fastify: FastifyInstance){
         url: "/me/books/:bookId/personas/:id/comment/:commentId",
         schema: {
             params: tripleQueryIdSchema,
+            tags: ["private"]
         },
         handler: async function (request, reply) {
 
@@ -131,7 +134,7 @@ export async function personasAndCommentsRoute(fastify: FastifyInstance){
             const personaId = request.params.id;
             const commentId = request.params.commentId;
 
-            const commentRepo = await getRepository(Comments);
+            const commentRepo = getRepository(Comments);
 
             const currentPersona = await getRepository(Personas).findOneOrFail(personaId);
 

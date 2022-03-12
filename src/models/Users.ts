@@ -2,6 +2,7 @@ import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, OneToMany
 import { hash, genSalt, compare} from "bcryptjs";
 import { Book } from "./Book";
 
+/** User Model */
 @Entity()
 export class Users{
 
@@ -37,6 +38,11 @@ export class Users{
     }
 
     // verify/decrypt password before login
+    /**
+     * Checks password before login
+     * @param passcode user entered password
+     * @returns true or false if the password matches the hashed database password
+    */
     public async checkPassword(_password: string){
 
         const isMatch = await compare(_password, this.password);

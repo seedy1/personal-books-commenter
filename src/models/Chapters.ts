@@ -2,6 +2,7 @@ import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGenerate
 import { Book } from "./Book";
 import { Comments } from "./Comments";
 
+/** Cahpter model. */
 @Entity()
 export class Chapters{
 

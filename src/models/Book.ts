@@ -23,6 +23,7 @@ import { bookRating, Genres } from "../shared/constants";
 // }
 
 // add unique for title
+/** Book model */
 @Entity()
 export class Book{
 

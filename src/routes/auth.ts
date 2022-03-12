@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { FastifyInstance } from "fastify";
 import { getRepository } from "typeorm";
 import { Users } from "../models/Users";
 import { User } from "../schemas/types/user";
@@ -20,6 +20,7 @@ export async function authRoutes(fastify: FastifyInstance){
         method: "POST",
         url: "/register",
         schema: {
+            tags: ["auth", "public"],
             body: userSchema
         },
         handler: async function(request, reply): Promise<User>{
@@ -27,7 +28,7 @@ export async function authRoutes(fastify: FastifyInstance){
             // use findBy to confirm email doesnt exsit  
             // handled by typeorm
 
-            const user = await getRepository(Users).create({
+            const user = getRepository(Users).create({
                 fullName: request.body.fullName,
                 email: request.body.email,
                 password: request.body.password
@@ -45,13 +46,14 @@ export async function authRoutes(fastify: FastifyInstance){
         method: "POST",
         url: "/login",
         schema: {
+            tags: ["auth", "public"],
             body: loginSchema
         },
         handler: async function(request, reply): Promise<Login>{
 
             const {email, password} = request.body;
             
-            const userRepo = await getRepository(Users);
+            const userRepo = getRepository(Users);
             // const _user = await userRepo.findOneOrFail({email});
             const user = await userRepo.findOne({email});
 
@@ -88,6 +90,9 @@ export async function authRoutes(fastify: FastifyInstance){
     fastify.route({
         method: "GET",
         url: "/logout",
+        schema:{
+            tags: ["auth", "private"]
+        },
         preHandler: isUserAuthenticated,
         handler: async function(request, reply){
 

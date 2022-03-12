@@ -13,6 +13,7 @@ import { SESSION_SECRET } from "./dotenv";
 import fastifySwagger from "fastify-swagger";
 import { swaggerDocs } from "./swaggerDoc";
 
+
 export const server = fastify({logger: true}) // remove logger for test. optionlly for me
 .register(fastifySwagger, swaggerDocs)
 .register(authRoutes)

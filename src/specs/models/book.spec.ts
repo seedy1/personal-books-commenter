@@ -2,7 +2,7 @@ import {expect} from "chai";
 import {getRepository} from "typeorm"
 import { server } from "../../lib/fastify";
 import {Book} from "../../models/Book";
-import { BookBody } from "../../schemas/types/bookBody";
+
 
 // unit validation test
 describe('Books Model', function(){

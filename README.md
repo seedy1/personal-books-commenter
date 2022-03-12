@@ -1,3 +1,4 @@
+
 npx tsc --watch and node .\dist\scrap.js 
 "test": "set NODE_ENV=test && mocha --recursive dist/specs --exit --async-stack-traces",
 
@@ -53,8 +54,8 @@ add later
 - [x] refactor ish
 - [x] Add (persona and chapter and comment) feature
 - [x] edit and delete (persona and chapter and comment) feature
-- [ ] final test
-- [ ] github actions
+- [x] final test
+- [x] github actions
 - [ ] answer READNE questions for gradings
 
 

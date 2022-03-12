@@ -34,14 +34,15 @@ export async function chaptersAndCommentsRoute(fastify: FastifyInstance){
         url: "/me/books/:id/chapters",
         schema: {
             params: queryIdSchema,
-            body: chaptersSchema
+            body: chaptersSchema,
+            tags: ["private"]
         },
         handler: async function (request, reply) {
 
             const id = request.params.id; //current book id
             const currentBook = await getRepository(Book).findOne(id);
 
-            const chapter = await getRepository(Chapters).create({
+            const chapter = getRepository(Chapters).create({
                 chapter: request.body.chapter, // chapter is a number
                 description: request.body.description,
                 book: currentBook
@@ -61,13 +62,14 @@ export async function chaptersAndCommentsRoute(fastify: FastifyInstance){
         method: "PUT",
         url: "/me/books/:bookId/chapters/:id",
         schema: {
-            params: doubleQueryIdSchema
+            params: doubleQueryIdSchema,
+            tags: ["private"]
         },
         handler: async function(request, reply){
 
-            const bookId = request.params.bookId;
+            // const bookId = request.params.bookId;
             const chapterId = request.params.id;
-            const {userId} = request.session.user;
+            // const {userId} = request.session.user;
             const {chapter, description} = request.body;
 
             const chaptersRepo = getRepository(Chapters);
@@ -92,11 +94,12 @@ export async function chaptersAndCommentsRoute(fastify: FastifyInstance){
         method: "DELETE",
         url: "/me/books/:bookId/chapters/:id",
         schema: {
-            params: doubleQueryIdSchema
+            params: doubleQueryIdSchema,
+            tags: ["private"]
         },
         handler: async function(request, reply){
 
-            const bookId = request.params.bookId;
+            // const bookId = request.params.bookId;
             const chapterId = request.params.id;
 
             const chaptersRepo = getRepository(Chapters);
@@ -124,7 +127,8 @@ export async function chaptersAndCommentsRoute(fastify: FastifyInstance){
         url: "/me/books/:bookId/chapters/:id/comment",
         schema: {
             params: doubleQueryIdSchema,
-            body: commentSchema
+            body: commentSchema,
+            tags: ["private"]
         },
         handler: async function (request, reply) {
 
@@ -133,7 +137,7 @@ export async function chaptersAndCommentsRoute(fastify: FastifyInstance){
 
             const currentChapter = await getRepository(Chapters).findOne(chapterId);
 
-            const comment = await getRepository(Comments).create({
+            const comment = getRepository(Comments).create({
                 comment: request.body.comment,
                 chapter: currentChapter
             });
@@ -155,6 +159,7 @@ export async function chaptersAndCommentsRoute(fastify: FastifyInstance){
         url: "/me/books/:bookId/chapters/:id/comment/:commentId",
         schema: {
             params: tripleQueryIdSchema,
+            tags: ["private"]
         },
         handler: async function (request, reply) {
 
@@ -162,7 +167,7 @@ export async function chaptersAndCommentsRoute(fastify: FastifyInstance){
             const chapterId = request.params.id;
             const commentId = request.params.commentId;
 
-            const commentRepo = await getRepository(Comments);
+            const commentRepo = getRepository(Comments);
 
             const currentChapter = await getRepository(Chapters).findOneOrFail(chapterId);
 

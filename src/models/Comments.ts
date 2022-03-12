@@ -1,7 +1,8 @@
-import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Chapters } from "./Chapters";
 import { Personas } from "./Personas";
 
+/** Comments model */
 @Entity()
 export class Comments{
 

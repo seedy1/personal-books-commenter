@@ -1,4 +1,4 @@
-import { createConnection, createConnections } from "typeorm";
+import { createConnection } from "typeorm";
 import { Book } from "../models/Book";
 import { Chapters } from "../models/Chapters";
 import { Personas } from "../models/Personas";
@@ -8,6 +8,7 @@ import { Users } from "../models/Users";
 
 
 // export function
+/** This is the database config for the dev. */
 export function initConnection(){
     return createConnection({
         type: "mysql",
@@ -22,6 +23,7 @@ export function initConnection(){
     })
 }
 
+/** This is the database config for the test */
 export function TestInitConnection(){
     return createConnection({
         type: "mysql",
