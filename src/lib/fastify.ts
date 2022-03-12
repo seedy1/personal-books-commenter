@@ -15,7 +15,7 @@ import { swaggerDocs } from "./swaggerDoc";
 import { UnauthorizedError } from "./isUserAuth";
 
 
-export const server = fastify({logger: true}) // remove logger for test. optionlly for me
+export const server = fastify({logger: true}) // set logger to false for prod. optionlly for me
 .register(fastifySwagger, swaggerDocs)
 .register(authRoutes)
 .register(bookRoutes)

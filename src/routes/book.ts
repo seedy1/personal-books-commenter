@@ -48,8 +48,7 @@ export async function bookRoutes(fastify: FastifyInstance){
             console.log("BOOKKKK");
             console.log(book);
             
-            // const book = await booksRepo.findOne(id);
-            // later check if(!book)
+            // check if(!book)
             if(book === undefined){
                 return reply.send({
                     message: "Book does not exist.",

@@ -1,17 +1,16 @@
-// import * as dotenv from "dotenv";
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-var-requires
 require('dotenv').config()
 
-// const hidden = process.env;
 export interface ProcessEnv {
     [key: string]: string | undefined
 }
+
+// fastify
 export const SERVER_PORT = parseInt(process.env.PORT || '3000', 10);
 
 
-// databse
-
+// database
 export const DATABASE_NAME = getOrThrow("DATABASE_NAME");
 export const TEST_DATABASE_NAME = getOrThrow("TEST_DATABASE_NAME");
 export const DATABASE_USER = getOrThrow("DATABASE_USER");
@@ -25,24 +24,15 @@ export const HASH_SALT = getOrThrow("BYCRYPT_SALT");
 // session and cookie
 export const SESSION_SECRET = getOrThrow("SESSION_SECRET");
 
+
+/**
+ * returns value stored in .env file
+ * @param name - name of variable to fetch from .env file
+ * @retruns the value if present
+ */
 function getOrThrow(name: string) {
     const val = process.env[name]
     if (typeof val === 'undefined') throw new Error(`Missing mandatory environment variable ${name}`)
     return val
 }
 
-
-/**
- * Returns value stored in environment variable with the given `name`.
- * Throws Error if no such variable or if variable undefined; thus ensuring type-safety.
- * @param name - name of variable to fetch from this process's environment.
- */
- export function env(name: string): string {
-    const value = process.env[name];
-  
-    if (!value) {
-      throw new Error(`Missing: process.env['${name}'].`);
-    }
-  
-    return value;
-  }
