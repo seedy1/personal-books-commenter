@@ -12,6 +12,7 @@ import { SESSION_SECRET } from "./dotenv";
 
 import fastifySwagger from "fastify-swagger";
 import { swaggerDocs } from "./swaggerDoc";
+import { UnauthorizedError } from "./isUserAuth";
 
 
 export const server = fastify({logger: true}) // remove logger for test. optionlly for me
@@ -28,5 +29,15 @@ export const server = fastify({logger: true}) // remove logger for test. optionl
     cookie:{
         httpOnly: false, // should be true for prod
         secure: false 
+    }
+}).setErrorHandler((err, request, reply) =>{
+    if(err instanceof UnauthorizedError){
+        void reply.status(422).send(err);
+    }else if(reply.statusCode < 500){
+        reply.log.info({res: reply, err: err}, err?.message);
+        void reply.send(err);
+    }else{
+        reply.log.error({req: request, res: reply, err: err}, err?.message);
+        void reply.send(new Error("Internal Server Error."));
     }
 });

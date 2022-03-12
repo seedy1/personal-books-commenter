@@ -13,3 +13,5 @@ export async function isUserAuthenticated(request: any, reply: any){
     }   
 }
 
+/** This class extends the error class */
+export class UnauthorizedError extends Error {}
