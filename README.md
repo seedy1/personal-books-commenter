@@ -1,7 +1,3 @@
-
-npx tsc --watch and node .\dist\scrap.js 
-"test": "set NODE_ENV=test && mocha --recursive dist/specs --exit --async-stack-traces",
-
 # NAME perosnal book jornal
 
 ## DESCRIPTION
@@ -14,15 +10,15 @@ add later
 ### 1. Install and setup node on your system
 ### 2. Install and setup Mysql and create a database and a test databaase
 ### 3. Add an .env file to the root folder and add the follwoing values accrodingly.
-- DATABASE_NAME=
-- TEST_DATABASE_NAME=
-- DATABASE_USER=
-- DATABASE_PASSWORD=
-- DATABASE_PORT=
-- DATABASE_HOST=
-- PORT=
-- BYCRYPT_SALT=
-- SESSION_SECRET=
+- DATABASE_NAME=NAME # make up
+- TEST_DATABASE_NAME=NAME # make up
+- DATABASE_USER=NAME # make up
+- DATABASE_PASSWORD=NAME # make up
+- DATABASE_PORT=PORT # make up
+- DATABASE_HOST=NAME # make up
+- PORT=PORT # make up
+- BYCRYPT_SALT=NAME # make up
+- SESSION_SECRET=NAME # make up
 
 ## Important commands 
 ### 1. Run the following commands to start the application
@@ -37,12 +33,10 @@ add later
 
 >`npm test-coverage` for coverage reporting
 
-### To run in production do the following
-- skrtt
-- skrtt
+### To make changes to the code first run `npx tsc --watch` then `node .\dist\index.js`.
 
 ## TODO
-
+#### my todo list to help me stay organzied 
 - [x] book crud
 - [x] book crud test - unit test
 - [x] user auth - fs session and cookie
