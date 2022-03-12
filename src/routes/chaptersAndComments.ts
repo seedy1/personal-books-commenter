@@ -39,8 +39,21 @@ export async function chaptersAndCommentsRoute(fastify: FastifyInstance){
         },
         handler: async function (request, reply) {
 
+            // check if user owns this resource
+            const {userId} = request.session.user;
             const id = request.params.id; //current book id
-            const currentBook = await getRepository(Book).findOne(id);
+            const currentBook = await getRepository(Book).findOne(id,
+                {
+                    relations: ["user"]
+                });
+
+            if(currentBook!.user?.id !== userId){
+                return reply.send({
+                    message:"Not authorized.",
+                    success: false
+                });
+            }
+
 
             const chapter = getRepository(Chapters).create({
                 chapter: request.body.chapter, // chapter is a number
@@ -67,9 +80,24 @@ export async function chaptersAndCommentsRoute(fastify: FastifyInstance){
         },
         handler: async function(request, reply){
 
-            // const bookId = request.params.bookId;
+            // check if user owns this resource
+            const {userId} = request.session.user;
+
+            const bookId = request.params.bookId;
+
+            const currentBook = await getRepository(Book).findOne(bookId,
+                {
+                    relations: ["user"]
+                });
+
+            if(currentBook!.user?.id !== userId){
+                return reply.send({
+                    message:"Not authorized.",
+                    success: false
+                });
+            }
+
             const chapterId = request.params.id;
-            // const {userId} = request.session.user;
             const {chapter, description} = request.body;
 
             const chaptersRepo = getRepository(Chapters);
@@ -85,7 +113,6 @@ export async function chaptersAndCommentsRoute(fastify: FastifyInstance){
                 success: true
             })
 
-
         }
     });
 
@@ -99,9 +126,22 @@ export async function chaptersAndCommentsRoute(fastify: FastifyInstance){
         },
         handler: async function(request, reply){
 
-            // const bookId = request.params.bookId;
-            const chapterId = request.params.id;
+            const {userId} = request.session.user;
+            const bookId = request.params.bookId;
+            const currentBook = await getRepository(Book).findOne(bookId,
+                {
+                    relations: ["user"]
+                });
 
+            if(currentBook!.user?.id !== userId){
+                return reply.send({
+                    message:"Not authorized.",
+                    success: false
+                });
+            }
+
+
+            const chapterId = request.params.id;
             const chaptersRepo = getRepository(Chapters);
             const currentChapter = await chaptersRepo.findOneOrFail(chapterId);
             await chaptersRepo.delete(chapterId);
@@ -132,7 +172,20 @@ export async function chaptersAndCommentsRoute(fastify: FastifyInstance){
         },
         handler: async function (request, reply) {
 
+            const {userId} = request.session.user;
             const bookId = request.params.bookId; //current book id
+            const currentBook = await getRepository(Book).findOne(bookId,
+                {
+                    relations: ["user"]
+                });
+
+            if(currentBook!.user?.id !== userId){
+                return reply.send({
+                    message:"Not authorized.",
+                    success: false
+                });
+            }
+
             const chapterId = request.params.id;
 
             const currentChapter = await getRepository(Chapters).findOne(chapterId);
@@ -161,9 +214,24 @@ export async function chaptersAndCommentsRoute(fastify: FastifyInstance){
             params: tripleQueryIdSchema,
             tags: ["private"]
         },
-        handler: async function (request, reply) {
+        handler: async function (request, reply){
 
+
+            // check if user owns this resource
+            const {userId} = request.session.user;
             const bookId = request.params.bookId; //current book id
+            const currentBook = await getRepository(Book).findOne(bookId,
+                {
+                    relations: ["user"]
+                });
+
+            if(currentBook!.user?.id !== userId){
+                return reply.send({
+                    message:"Not authorized.",
+                    success: false
+                });
+            }
+
             const chapterId = request.params.id;
             const commentId = request.params.commentId;
 

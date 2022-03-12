@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.9% </span>
+                <span class="strong">94.73% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>13/21</span>
+                <span class='fraction'>18/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.9% </span>
+                <span class="strong">94.73% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>13/21</span>
+                <span class='fraction'>18/19</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -112,9 +112,7 @@
 <a name='L47'></a><a href='#L47'>47</a>
 <a name='L48'></a><a href='#L48'>48</a>
 <a name='L49'></a><a href='#L49'>49</a>
-<a name='L50'></a><a href='#L50'>50</a>
-<a name='L51'></a><a href='#L51'>51</a>
-<a name='L52'></a><a href='#L52'>52</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L50'></a><a href='#L50'>50</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -146,16 +144,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -196,17 +192,15 @@ async function bookRoutes(fastify) {
             params: queryIdSchema,
             tags: ["public", "book"]
         },
-        handler: <span class="fstat-no" title="function not covered" >as</span>ync function (request, reply) {
-            const id = <span class="cstat-no" title="statement not covered" >request.params.id;</span>
-            const booksRepo = <span class="cstat-no" title="statement not covered" >(0, typeorm_1.getRepository)(Book_1.Book);</span>
-            const book = <span class="cstat-no" title="statement not covered" >await booksRepo.findOne(id, {</span>
+        handler: async function (request, reply) {
+            const id = request.params.id;
+            const booksRepo = (0, typeorm_1.getRepository)(Book_1.Book);
+            const book = await booksRepo.findOne(id, {
                 relations: ["chapters", "chapters.comments", "personas", "personas.comments"]
             });
-<span class="cstat-no" title="statement not covered" >            console.log("BOOKKKK");</span>
-<span class="cstat-no" title="statement not covered" >            console.log(book);</span>
             // check if(!book)
-<span class="cstat-no" title="statement not covered" >            if (book === undefined) {</span>
-<span class="cstat-no" title="statement not covered" >                return reply.send({</span>
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (book === undefined) {
+                return reply.send({
                     message: "Book does not exist.",
                     success: false
                 });
@@ -223,7 +217,7 @@ exports.bookRoutes = bookRoutes;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Sat Mar 12 2022 18:25:34 GMT+0100 (Central European Standard Time)
+                at Sat Mar 12 2022 20:44:27 GMT+0100 (Central European Standard Time)
             </div>
         <script src="../prettify.js"></script>
         <script>

@@ -33,6 +33,15 @@ describe('Books Model', function(){
             expect(reply.statusCode).to.not.equal(200);
         });
 
+        it('should return page success false', async function(){
+            const reply = await server.inject({
+                url: 'http://localhost:3000/books/1',
+                method: "GET"
+            });
+            expect(reply.json()).to.haveOwnProperty("success");
+            expect(reply.json()).to.haveOwnProperty("success").equal(false);
+        });
+
 
     });
 

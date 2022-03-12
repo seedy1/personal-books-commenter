@@ -20,44 +20,6 @@ describe("User Books", function(){
 
     });
 
-    // beforeEach("Login", async function(){
-
-    //     // login
-    //     const loginPayload = {
-    //         email: "jd@p.com",
-    //         password: "123pass123"
-    //     };
-
-    //     const login = await server.inject({
-    //         url: "login",
-    //         method: "POST",
-    //         payload: loginPayload
-    //     });
-
-    //     const cookie = login.headers["set-cookie"];
-
-    // });
-
-    // async function getCookie(){
-
-    //     // login
-    //     const loginPayload = {
-    //         email: "jd@p.com",
-    //         password: "123pass123"
-    //     };
-
-    //     const login = await server.inject({
-    //         url: "login",
-    //         method: "POST",
-    //         payload: loginPayload
-    //     });
-
-    //     const cook = login.headers["set-cookie"];
-
-    //     return cook;
-
-    // }
-
     describe("Private user routes and CRUD", function(){
 
         it("should get user profile route", async function(){
@@ -134,6 +96,155 @@ describe("User Books", function(){
             expect(reply.json()).to.haveOwnProperty('title');
             expect(reply.json()).to.haveOwnProperty('title').equal("book title");
 
+        });
+
+        it('should edit a newly created book', async function(){
+
+            // login
+            const loginPayload = {
+                email: "jd@p.com",
+                password: "123pass123"
+            };
+    
+            const login = await server.inject({
+                url: "login",
+                method: "POST",
+                payload: loginPayload
+            });
+            const cookie = login.headers["set-cookie"];
+
+            const payload = {
+                title: "book to edit",
+                author: "string",
+                realeaseYear: 1919,
+                genre: "FICTION",
+                pages: 50,
+                isbn: "stg43ring",
+                rating: "FIVE",
+
+            };
+            await server.inject({
+                headers: {cookie},
+                url: 'me/books',
+                method: "POST",
+                payload: payload
+            });
+
+            const updatePayload = {
+                title: "updated title",
+                realeaseYear: 2019
+            };
+
+            const reply = await server.inject({
+                headers: {cookie},
+                url: 'me/books/1',
+                method: "PUT",
+                payload: updatePayload
+
+            });
+
+
+            expect(reply.statusCode).to.equal(200);
+            expect(reply.json()).to.haveOwnProperty('title').equal("updated title");
+            expect(reply.json()).to.haveOwnProperty('realeaseYear').equal(2019);
+
+        });
+
+        
+        it('should add a chapter to a newly created book', async function(){
+
+            // login
+            const loginPayload = {
+                email: "jd@p.com",
+                password: "123pass123"
+            };
+    
+            const login = await server.inject({
+                url: "login",
+                method: "POST",
+                payload: loginPayload
+            });
+            const cookie = login.headers["set-cookie"];
+
+            const payload = {
+                title: "bookie",
+                author: "string",
+                realeaseYear: 1919,
+                genre: "FICTION",
+                pages: 50,
+                isbn: "stg43ring",
+                rating: "FIVE",
+
+            };
+            await server.inject({
+                headers: {cookie},
+                url: 'me/books',
+                method: "POST",
+                payload: payload
+            });
+
+            const chapterPayload = {
+                chapter: "1",
+            };
+
+            const reply = await server.inject({
+                headers: {cookie},
+                url: 'me/books/1/chapters',
+                method: "POST",
+                payload: chapterPayload
+
+            });
+
+            expect(reply.statusCode).to.equal(200);
+            expect(reply.json()).to.haveOwnProperty("success").equal(true);
+        });
+
+        it('should add a persona to a newly created book', async function(){
+
+            // login
+            const loginPayload = {
+                email: "jd@p.com",
+                password: "123pass123"
+            };
+    
+            const login = await server.inject({
+                url: "login",
+                method: "POST",
+                payload: loginPayload
+            });
+            const cookie = login.headers["set-cookie"];
+
+            const payload = {
+                title: "bookie",
+                author: "string",
+                realeaseYear: 1919,
+                genre: "FICTION",
+                pages: 50,
+                isbn: "stg43ring",
+                rating: "FIVE",
+
+            };
+            await server.inject({
+                headers: {cookie},
+                url: 'me/books',
+                method: "POST",
+                payload: payload
+            });
+
+            const personaPayload = {
+                characterName: "john doe",
+            };
+
+            const reply = await server.inject({
+                headers: {cookie},
+                url: 'me/books/1/personas',
+                method: "POST",
+                payload: personaPayload
+
+            });
+
+            expect(reply.statusCode).to.equal(200);
+            expect(reply.json()).to.haveOwnProperty("success").equal(true);
         });
 
     });

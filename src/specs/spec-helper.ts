@@ -3,7 +3,6 @@ import { TestInitConnection } from "../lib/databaseConfig";
 
 
 before(async function() {
-  console.log("setting up db - BEFORE");
   await TestInitConnection();
   await clearDB("TRUNCATE")
 });
@@ -12,7 +11,7 @@ before(async function() {
 
 async function clearDB(kind: string){
 
-  const models = await getConnection().entityMetadatas;
+  const models = getConnection().entityMetadatas;
   const conn = getConnection();
 
 

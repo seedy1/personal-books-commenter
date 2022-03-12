@@ -37,8 +37,20 @@ export async function personasAndCommentsRoute(fastify: FastifyInstance){
         },
         handler: async function (request, reply) {
 
+            // check if user owns this resource
+            const {userId} = request.session.user;
             const id = request.params.id; //current book id
-            const currentBook = await getRepository(Book).findOne(id);
+            const currentBook = await getRepository(Book).findOne(id,
+                {
+                    relations: ["user"]
+                });
+
+            if(currentBook!.user?.id !== userId){
+                return reply.send({
+                    message:"Not authorized.",
+                    success: false
+                });
+            }
 
             const persona = getRepository(Personas).create({
                 characterName: request.body.characterName,
@@ -60,13 +72,29 @@ export async function personasAndCommentsRoute(fastify: FastifyInstance){
         method: "PUT",
         url: "/me/books/:bookId/personas/:id",
         schema: {
-            params: doubleQueryIdSchema
+            params: doubleQueryIdSchema,
+            tags: ["private"]
         },
         handler: async function(request, reply){
 
-            // const bookId = request.params.bookId;
+            // check if user owns this resource
+            const {userId} = request.session.user;
+            const bookId = request.params.bookId;
+
+            const currentBook = await getRepository(Book).findOne(bookId,
+                {
+                    relations: ["user"]
+                });
+
+            if(currentBook!.user?.id !== userId){
+                return reply.send({
+                    message:"Not authorized.",
+                    success: false
+                });
+            }
+
+
             const personaId = request.params.id;
-            // const {userId} = request.session.user;
             const {characterName, description} = request.body;
 
             const personasRepo = getRepository(Personas);
@@ -87,6 +115,46 @@ export async function personasAndCommentsRoute(fastify: FastifyInstance){
     });
 
 
+    // delete persona without any comments
+    fastify.route<{Params: TwoPartQueryId}>({
+        method: "DELETE",
+        url: "/me/books/:bookId/personas/:id",
+        schema: {
+            params: doubleQueryIdSchema,
+            tags: ["private"]
+        },
+        handler: async function(request, reply){
+
+            const {userId} = request.session.user;
+            const bookId = request.params.bookId;
+            const currentBook = await getRepository(Book).findOne(bookId,
+                {
+                    relations: ["user"]
+                });
+
+            if(currentBook!.user?.id !== userId){
+                return reply.send({
+                    message:"Not authorized.",
+                    success: false
+                });
+            }
+
+
+            const personaId = request.params.id;
+            const personasRepo = getRepository(Personas);
+            const currentChapter = await personasRepo.findOneOrFail(personaId);
+            await personasRepo.delete(personaId);
+            
+            return reply.send({
+                message: "delete successful",
+                success: true
+            });
+
+
+        }
+    });
+
+
 
     // add a comment to a persona of a book
     fastify.route<{Params: TwoPartQueryId, Body: Comments}>({
@@ -99,9 +167,22 @@ export async function personasAndCommentsRoute(fastify: FastifyInstance){
         },
         handler: async function (request, reply) {
 
-            const bookId = request.params.bookId; //current book id
-            const personaId = request.params.id;
+            const {userId} = request.session.user;
+            const bookId = request.params.bookId;
+            const currentBook = await getRepository(Book).findOne(bookId,
+                {
+                    relations: ["user"]
+                });
 
+            if(currentBook!.user?.id !== userId){
+                return reply.send({
+                    message:"Not authorized.",
+                    success: false
+                });
+            }
+
+
+            const personaId = request.params.id;
             const currentPersona = await getRepository(Personas).findOne(personaId);
 
             const comment = getRepository(Comments).create({
@@ -130,10 +211,23 @@ export async function personasAndCommentsRoute(fastify: FastifyInstance){
         },
         handler: async function (request, reply) {
 
-            const bookId = request.params.bookId; //current book id
+            const {userId} = request.session.user;
+            const bookId = request.params.bookId;
+            const currentBook = await getRepository(Book).findOne(bookId,
+                {
+                    relations: ["user"]
+                });
+
+            if(currentBook!.user?.id !== userId){
+                return reply.send({
+                    message:"Not authorized.",
+                    success: false
+                });
+            }
+            
+
             const personaId = request.params.id;
             const commentId = request.params.commentId;
-
             const commentRepo = getRepository(Comments);
 
             const currentPersona = await getRepository(Personas).findOneOrFail(personaId);

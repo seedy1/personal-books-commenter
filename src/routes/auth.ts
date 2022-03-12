@@ -54,11 +54,10 @@ export async function authRoutes(fastify: FastifyInstance){
             const {email, password} = request.body;
             
             const userRepo = getRepository(Users);
-            // const _user = await userRepo.findOneOrFail({email});
             const user = await userRepo.findOne({email});
 
             // check email
-            if(user == null){
+            if(user == null || user == undefined){
                 return reply.send({
                     message: "Wrong credentials...",
                     success: false

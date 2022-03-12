@@ -68,7 +68,6 @@ export async function userRoutes(fastify: FastifyInstance){
         schema: {
             params: queryIdSchema,
             tags: ["private", "book"]
-            // response: {200: bookSchema}
         },
         handler: async function (request, reply) {
 
@@ -87,7 +86,7 @@ export async function userRoutes(fastify: FastifyInstance){
             if(userBook.user?.id === userId){
                 return reply.send(userBook);  
             }else{
-                reply.send("not aut...");
+                reply.send("Not authorized.");
             }
           
         }
@@ -134,12 +133,11 @@ export async function userRoutes(fastify: FastifyInstance){
 
     // update - PUT
     fastify.route<{Params: QueryId, Body: BookBody}>({
-        // method: 'PATCH',
         method: 'PUT',
         url: '/me/books/:id',
         schema: {
             params: queryIdSchema,
-            // response: {200: bookSchema}
+            tags: ["book", "private"]
         },
         handler: async function (request, reply){
 
@@ -149,28 +147,15 @@ export async function userRoutes(fastify: FastifyInstance){
             
             // get user object
             const {userId} = request.session.user;
-            // const user = await getRepository(Users).findOne(userId);
-
 
             const booksRepo = await getRepository(Book);
-            // const book = await booksRepo.findOneOrFail(id);
 
             const book = await booksRepo.findOneOrFail(id,
                 {
                 relations: ["user"],
             });
-            // if(book){}
 
-            // book.title = title;
-            // book.author = author;
-            // book.genre = <Genres> genre;
-            // book.pages = pages;
-            // book.realeaseYear = realeaseYear;
-            // book.isbn = isbn;
-            // book.rating = <bookRating> rating;
-            // book.user = user;
-
-            if(book.user?.id === userId){
+            if(book.user?.id === userId){ // checking if user is authorized
 
                 book.title = title;
                 book.author = author;
@@ -180,7 +165,6 @@ export async function userRoutes(fastify: FastifyInstance){
                 book.isbn = isbn;
                 book.rating = <bookRating> rating;
 
-                // return reply.send(userBook);
                 const bookUpdate = await booksRepo.save(book);
                 return reply.send(bookUpdate);
 
@@ -188,58 +172,9 @@ export async function userRoutes(fastify: FastifyInstance){
                 reply.send("not aut...");
             }
 
-            // const bookUpdate = await booksRepo.save(book);
-            // return reply.send(bookUpdate);  
         }
     });
 
-    // update - PATCH
-    // partial data
-    // fastify.route<{Params: QueryId, Body: BookBody}>({
-    //     method: 'PATCH',
-    //     url: '/me/books/:id',
-    //     schema: {
-    //         params: queryIdSchema,
-    //     },
-    //     handler: async function (request, reply){
-
-    //         const id = request.params.id;
-    //         const { title, author, genre, pages, realeaseYear, isbn, rating } = request.body;
-
-            
-    //         // get user object
-    //         const {userId} = request.session.user;
-
-
-    //         const booksRepo = await getRepository(Book);
-    //         // const book = await booksRepo.findOneOrFail(id);
-
-    //         const book = await booksRepo.findOneOrFail(id,
-    //             {
-    //             relations: ["user"],
-    //         });
-
-    //         if(book.user?.id === userId){
-
-    //             book.title = title;
-    //             book.author = author;
-    //             book.genre = <Genres> genre;
-    //             book.pages = pages;
-    //             book.realeaseYear = realeaseYear;
-    //             book.isbn = isbn;
-    //             book.rating = <bookRating> rating;
-
-    //             // return reply.send(userBook);
-    //             const bookUpdate = await booksRepo.update(id,{
-
-    //             });
-    //             return reply.send(bookUpdate);
-
-    //         }else{
-    //             reply.send("not aut...");
-    //         }
-    //     }
-    // });
 
     // delete
     fastify.route<{Params: QueryId}>({
@@ -247,6 +182,7 @@ export async function userRoutes(fastify: FastifyInstance){
         url: '/me/books/:id',
         schema: {
             params: queryIdSchema,
+            tags: ["book", "private"]
         },
         handler: async function (request, reply) {
             const id = request.params.id;
@@ -254,7 +190,7 @@ export async function userRoutes(fastify: FastifyInstance){
              // get user object
              const {userId} = request.session.user;
 
-             const booksRepo = await getRepository(Book);
+             const booksRepo = getRepository(Book);
 
              // check if book exist
              const book = await booksRepo.findOneOrFail(id,
